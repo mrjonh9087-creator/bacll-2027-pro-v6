@@ -1,0 +1,13 @@
+{
+  "name": "bacii-2027-pro",
+  "version": "4.0.0",
+  "description": "BacII 2027 Social Sciences Study & Exam Archive iOS App",
+  "scripts": {
+    "build": "echo 'Static Web Assets Ready'"
+  },
+  "dependencies": {
+    "@capacitor/cli": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/ios": "^6.0.0"
+  }
+}

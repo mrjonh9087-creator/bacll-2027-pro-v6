@@ -1,0 +1,9 @@
+{
+  "appId": "com.bacii2027.socialpro",
+  "appName": "BacII 2027 Pro",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "ios": {
+    "contentInset": "always"
+  }
+}
