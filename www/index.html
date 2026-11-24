@@ -620,6 +620,25 @@
     </div>
   </div>
 
+  <!-- ==================== EXAM PAGES VIEWER ==================== -->
+  <div id="exam-viewer" class="hidden fixed inset-0 z-[60] bg-zinc-200 flex flex-col">
+    <div class="shrink-0 flex items-center gap-2 px-3 pb-2.5 bg-white/95 backdrop-blur border-b border-zinc-200" style="padding-top: max(0.625rem, env(safe-area-inset-top));">
+      <button onclick="closeExamViewer()" class="w-9 h-9 shrink-0 rounded-full bg-zinc-100 text-zinc-700 font-extrabold text-base active:scale-95" aria-label="បិទ">✕</button>
+      <div class="min-w-0 flex-1">
+        <p id="exam-viewer-title" class="text-[13px] font-extrabold text-zinc-900 truncate"></p>
+        <p id="exam-viewer-meta" class="text-[11px] text-zinc-500 font-semibold"></p>
+      </div>
+      <div class="shrink-0 flex items-center gap-1">
+        <button onclick="zoomExamViewer(-1)" class="w-9 h-9 rounded-full bg-zinc-100 text-zinc-800 font-extrabold text-lg leading-none active:scale-95" aria-label="បង្រួម">−</button>
+        <span id="exam-viewer-zoom" class="w-11 text-center text-[11px] font-extrabold text-zinc-700">100%</span>
+        <button onclick="zoomExamViewer(1)" class="w-9 h-9 rounded-full bg-[#FDECE3] text-[#EA580C] font-extrabold text-lg leading-none active:scale-95" aria-label="ពង្រីក">+</button>
+      </div>
+    </div>
+    <div id="exam-viewer-scroll" class="flex-1 overflow-auto" style="-webkit-overflow-scrolling: touch; padding-bottom: env(safe-area-inset-bottom);">
+      <div id="exam-viewer-pages" class="p-2 space-y-2 mx-auto" style="max-width: none;"></div>
+    </div>
+  </div>
+
   <!-- ==================== API KEY & BACKUP MODAL ==================== -->
   <div id="settings-modal" class="hidden fixed inset-0 z-50 bg-zinc-900/45 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="ios-surface p-5 w-full max-w-sm space-y-4">
@@ -759,6 +778,7 @@
 
     const SUBJECTS = (window.BACII_SUBJECTS && window.BACII_SUBJECTS.length) ? window.BACII_SUBJECTS : FALLBACK_SUBJECTS;
     const EXAMS = (window.EXAM_ARCHIVE && window.EXAM_ARCHIVE.length) ? window.EXAM_ARCHIVE : FALLBACK_EXAMS;
+    const EXAM_PAGES_DIR = window.EXAM_PAGES_DIR || 'pages/';
     const QCMS = (window.QCM_BANK && window.QCM_BANK.length) ? window.QCM_BANK : FALLBACK_QCMS;
     const DEFAULT_CARDS = (window.DEFAULT_FLASHCARDS && window.DEFAULT_FLASHCARDS.length) ? window.DEFAULT_FLASHCARDS : FALLBACK_CARDS;
     const ALL_SUBJ_NAMES = ['ទាំងអស់', ...new Set([...SUBJECT_CARDS_META.map(s => s.name), ...EXAMS.map(e => e.subj)])];
@@ -1564,14 +1584,18 @@
           <h3 class="text-sm font-extrabold text-zinc-900">${item.title}</h3>
           <p class="text-[14.5px] text-zinc-700 leading-[1.85] whitespace-pre-line select-text">${item.question}</p>
           <div class="grid grid-cols-3 gap-2 pt-1">
+            ${item.pageFrom ? `
+            <button onclick="openExamViewer('${item.id}')" class="col-span-2 py-2.5 rounded-xl bg-[#F97316] text-white text-xs font-extrabold active:scale-[0.99]">
+              📄 មើលវិញ្ញាសាពេញ (${item.pageTo - item.pageFrom + 1} ទំព័រ)
+            </button>` : `
             <button onclick="toggleAns(${idx})" class="col-span-2 py-2.5 rounded-xl bg-[#FDECE3] text-[#EA580C] text-xs font-bold active:scale-[0.99]">
               👁️ អត្រាកំណែ / ចម្លើយ
-            </button>
+            </button>`}
             <button onclick="toggleReviewed('${item.id}')" class="py-2.5 rounded-xl text-xs font-bold transition ${isDone ? 'bg-[#E6F8F0] text-[#10B981]' : 'bg-zinc-100 text-zinc-500'}">
               ${isDone ? '✓ រំលឹករួច' : '○ ធីករួច'}
             </button>
           </div>
-          <div id="exam-ans-${idx}" class="hidden p-3.5 rounded-2xl bg-[#E6F8F0]/80 text-[14.5px] text-zinc-800 leading-[1.85] whitespace-pre-line select-text">${item.answer}</div>
+          ${item.pageFrom ? '' : `<div id="exam-ans-${idx}" class="hidden p-3.5 rounded-2xl bg-[#E6F8F0]/80 text-[14.5px] text-zinc-800 leading-[1.85] whitespace-pre-line select-text">${item.answer}</div>`}
         </div>`;
       }).join('');
       renderMath();
@@ -1581,6 +1605,81 @@
       document.getElementById(`exam-ans-${idx}`).classList.toggle('hidden');
       renderMath();
     }
+
+    // ===== កម្មវិធីអានទំព័រវិញ្ញាសាពេញ (រូបភាពពី PDF ដើម) =====
+    const EXAM_ZOOM_LEVELS = [100, 150, 200, 300];
+    let examZoomIdx = 0;
+    let examViewerObserver = null;
+
+    function openExamViewer(id) {
+      const ex = EXAMS.find(e => e.id === id);
+      if (!ex || !ex.pageFrom) return;
+      const total = ex.pageTo - ex.pageFrom + 1;
+      document.getElementById('exam-viewer-title').textContent = ex.title;
+      document.getElementById('exam-viewer-meta').textContent = `ទំព័រ ១ / ${total}`;
+      const box = document.getElementById('exam-viewer-pages');
+      let html = '';
+      for (let p = ex.pageFrom, n = 1; p <= ex.pageTo; p++, n++) {
+        const file = `${EXAM_PAGES_DIR}${String(p).padStart(3, '0')}.webp`;
+        html += `
+          <div class="exam-page bg-white rounded-lg shadow-sm overflow-hidden" data-n="${n}" style="aspect-ratio: 758 / 1075;">
+            <img src="${file}" alt="ទំព័រ ${n}" loading="lazy" decoding="async" class="w-full h-auto block" onerror="examPageError(this, '${file}')">
+          </div>`;
+      }
+      box.innerHTML = html;
+      examZoomIdx = 0;
+      applyExamZoom();
+      const scroller = document.getElementById('exam-viewer-scroll');
+      scroller.scrollTop = 0; scroller.scrollLeft = 0;
+      document.getElementById('exam-viewer').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+
+      if (examViewerObserver) examViewerObserver.disconnect();
+      if ('IntersectionObserver' in window) {
+        examViewerObserver = new IntersectionObserver(entries => {
+          entries.forEach(en => {
+            if (en.isIntersecting) {
+              document.getElementById('exam-viewer-meta').textContent = `ទំព័រ ${toKhmerDigits(en.target.dataset.n)} / ${toKhmerDigits(total)}`;
+            }
+          });
+        }, { root: scroller, threshold: 0.5 });
+        box.querySelectorAll('.exam-page').forEach(el => examViewerObserver.observe(el));
+      }
+    }
+
+    function toKhmerDigits(v) {
+      return String(v).replace(/[0-9]/g, d => '០១២៣៤៥៦៧៨៩'[d]);
+    }
+
+    function closeExamViewer() {
+      document.getElementById('exam-viewer').classList.add('hidden');
+      document.getElementById('exam-viewer-pages').innerHTML = '';
+      document.body.style.overflow = '';
+      if (examViewerObserver) { examViewerObserver.disconnect(); examViewerObserver = null; }
+    }
+
+    function zoomExamViewer(dir) {
+      examZoomIdx = Math.max(0, Math.min(EXAM_ZOOM_LEVELS.length - 1, examZoomIdx + dir));
+      applyExamZoom();
+    }
+
+    function applyExamZoom() {
+      const z = EXAM_ZOOM_LEVELS[examZoomIdx];
+      const box = document.getElementById('exam-viewer-pages');
+      box.style.width = z + '%';
+      box.style.marginLeft = z === 100 ? 'auto' : '0';
+      box.style.marginRight = z === 100 ? 'auto' : '0';
+      document.getElementById('exam-viewer-zoom').textContent = z + '%';
+    }
+
+    function examPageError(img, file) {
+      const wrap = img.parentElement;
+      wrap.style.aspectRatio = 'auto';
+      wrap.innerHTML = `<div class="p-5 text-center text-xs text-rose-600 font-bold leading-relaxed">⚠️ រកមិនឃើញរូបភាព <span class="font-mono">${file}</span><br><span class="text-zinc-500 font-semibold">សូមដាក់ថត <b>pages</b> ក្បែរឯកសារ index.html (ហើយបើកតាមរយៈ web server)</span></div>`;
+    }
+    document.addEventListener('keydown', ev => {
+      if (ev.key === 'Escape' && !document.getElementById('exam-viewer').classList.contains('hidden')) closeExamViewer();
+    });
 
     function switchStudySubmode(mode) {
       const isQcm = mode === 'qcm';
