@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="km"><head>
-  <script type="module" src="/@vite/client"></script>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -12,10 +10,12 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Kantumruy+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Kantumruy+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMath()"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMath()"></script>
+  <!-- ភ្ជាប់ឃ្លាំងទិន្នន័យវិញ្ញាសា exams_data.js -->
+  <script src="exams_data.js"></script>
   <style>
     :root {
       --font-ui: 'Inter', 'Kantumruy Pro', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -44,7 +44,8 @@
     #qcm-explain,
     #card-content,
     #ai-output,
-    #exam-reader-content {
+    #exam-reader-question,
+    #exam-reader-answer {
       font-family: var(--font-reading);
       font-size: 15px;
       line-height: 1.85;
@@ -145,7 +146,7 @@
     }
     .toast-enter { animation: toastSlideDown 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
   </style>
-<script src="/_aistudio-iframe.js?v=29045eb3"></script><script src="https://cdn.jsdelivr.net/npm/html2canvas-pro@2.0.4"></script><style>.aistudio-hover-highlight { box-shadow: inset 0 0 0 0.5px white, inset 0 0 0 1.5px rgba(128,128,128,0.6) !important; }.aistudio-active-highlight { outline: 2px solid #87a9ff !important; outline-offset: -2px !important; box-shadow: 0 0 0 0.5px rgba(0,0,0,0.3), inset 0 0 0 0.5px rgba(0,0,0,0.3) !important; }.aistudio-generating-blur { filter: blur(5px) grayscale(100%) brightness(28%) !important; transition: filter 0.3s ease; }#aistudio-focus-mode-tag { position: absolute; display: none; align-items: center; gap: 4px; background: #87a9ff; border-radius: 12px; z-index: 10000; padding: 8px; color: #32302c; font-family: Inter, sans-serif; font-size: 14px; font-style: normal; font-weight: 500; line-height: 21px; pointer-events: none; }#aistudio-hover-mode-tag { position: absolute; display: none; align-items: center; gap: 4px; background: rgba(128,128,128,0.6); border-radius: 12px; z-index: 10000; padding: 8px; color: white; font-family: Inter, sans-serif; font-size: 14px; font-style: normal; font-weight: 500; line-height: 21px; pointer-events: none; }.aistudio-img-icon { display: none; vertical-align: middle; pointer-events: auto; cursor: pointer; }.aistudio-img-icon.visible { display: inline-flex; }#aistudio-focus-mode-tag .aistudio-img-icon { position: relative; width: 26px; height: 26px; background: #32302c; border-radius: 6px; margin: -4px -4px -4px 0; }#aistudio-focus-mode-tag .aistudio-img-icon::before { content: ""; position: absolute; top: 4px; left: 4px; width: 18px; height: 18px; background-color: white; -webkit-mask-image: url("https://fonts.gstatic.com/s/i/short-term/release/googlesymbols/edit_fix_auto/default/24px.svg"); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; mask-image: url("https://fonts.gstatic.com/s/i/short-term/release/googlesymbols/edit_fix_auto/default/24px.svg"); mask-size: contain; mask-repeat: no-repeat; }#aistudio-hover-mode-tag .aistudio-img-icon { position: relative; width: 18px; height: 18px; margin-left: 4px; }#aistudio-hover-mode-tag .aistudio-img-icon::before { content: ""; position: absolute; top: 0; left: 0; width: 18px; height: 18px; background-color: white; -webkit-mask-image: url("https://fonts.gstatic.com/s/i/short-term/release/googlesymbols/edit_fix_auto/default/24px.svg"); -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; mask-image: url("https://fonts.gstatic.com/s/i/short-term/release/googlesymbols/edit_fix_auto/default/24px.svg"); mask-size: contain; mask-repeat: no-repeat; }#aistudio-focus-mode-tag .aistudio-img-icon:hover, #aistudio-hover-mode-tag .aistudio-img-icon:hover { background: #424242 !important; }#aistudio-focus-mode-tag .aistudio-img-icon:active, #aistudio-hover-mode-tag .aistudio-img-icon:active { background: #393f51 !important; }</style><style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pin-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.pointer-events-auto{pointer-events:auto}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.inset-x-0{left:0px;right:0px}.-bottom-12{bottom:-3rem}.-left-10{left:-2.5rem}.-right-12{right:-3rem}.-top-12{top:-3rem}.bottom-0{bottom:0px}.left-1\/2{left:50%}.left-3\.5{left:0.875rem}.right-2\.5{right:0.625rem}.top-0{top:0px}.top-3{top:0.75rem}.top-\[74px\]{top:74px}.right-1\.5{right:0.375rem}.top-7{top:1.75rem}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-50{z-index:50}.z-\[60\]{z-index:60}.col-span-2{grid-column:span 2 / span 2}.mx-auto{margin-left:auto;margin-right:auto}.my-4{margin-top:1rem;margin-bottom:1rem}.mb-0\.5{margin-bottom:0.125rem}.mb-2{margin-bottom:0.5rem}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.mt-1\.5{margin-top:0.375rem}.mt-3\.5{margin-top:0.875rem}.mb-1{margin-bottom:0.25rem}.line-clamp-3{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-1\.5{height:0.375rem}.h-11{height:2.75rem}.h-2{height:0.5rem}.h-2\.5{height:0.625rem}.h-3\.5{height:0.875rem}.h-4{height:1rem}.h-40{height:10rem}.h-44{height:11rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-\[116px\]{height:116px}.h-\[48px\]{height:48px}.h-\[94px\]{height:94px}.h-full{height:100%}.h-12{height:3rem}.h-14{height:3.5rem}.h-24{height:6rem}.h-\[158px\]{height:158px}.h-\[54px\]{height:54px}.h-\[72px\]{height:72px}.max-h-\[92vh\]{max-height:92vh}.min-h-\[230px\]{min-height:230px}.min-h-screen{min-height:100vh}.w-11{width:2.75rem}.w-2{width:0.5rem}.w-3\.5{width:0.875rem}.w-4{width:1rem}.w-40{width:10rem}.w-44{width:11rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-\[48px\]{width:48px}.w-\[94px\]{width:94px}.w-full{width:100%}.w-14{width:3.5rem}.w-\[134px\]{width:134px}.w-\[54px\]{width:54px}.min-w-0{min-width:0px}.max-w-2xl{max-width:42rem}.max-w-lg{max-width:32rem}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.max-w-\[110px\]{max-width:110px}.max-w-\[26px\]{max-width:26px}.max-w-full{max-width:100%}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-rotate-90{--tw-rotate:-90deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.select-text{-webkit-user-select:text;user-select:text}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.grid-cols-5{grid-template-columns:repeat(5, minmax(0, 1fr))}.grid-cols-7{grid-template-columns:repeat(7, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0\.5{gap:0.125rem}.gap-1{gap:0.25rem}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.gap-3\.5{gap:0.875rem}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-2\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.625rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.625rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-3\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.875rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.875rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * calc(1 - var(--tw-divide-y-reverse))}.divide-zinc-100\/80 > :not([hidden]) ~ :not([hidden]){border-color:rgb(244 244 245 / 0.8)}.overflow-auto{overflow:auto}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-nowrap{white-space:nowrap}.whitespace-pre-line{white-space:pre-line}.rounded-2xl{border-radius:1rem}.rounded-\[11px\]{border-radius:11px}.rounded-\[16px\]{border-radius:16px}.rounded-\[22px\]{border-radius:22px}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-xl{border-radius:0.75rem}.rounded-\[24px\]{border-radius:24px}.rounded-\[9px\]{border-radius:9px}.rounded-t-\[32px\]{border-top-left-radius:32px;border-top-right-radius:32px}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-emerald-200{--tw-border-opacity:1;border-color:rgb(167 243 208 / var(--tw-border-opacity, 1))}.border-orange-100{--tw-border-opacity:1;border-color:rgb(255 237 213 / var(--tw-border-opacity, 1))}.border-orange-200\/80{border-color:rgb(254 215 170 / 0.8)}.border-white\/10{border-color:rgb(255 255 255 / 0.1)}.border-white\/15{border-color:rgb(255 255 255 / 0.15)}.border-zinc-100{--tw-border-opacity:1;border-color:rgb(244 244 245 / var(--tw-border-opacity, 1))}.border-zinc-200{--tw-border-opacity:1;border-color:rgb(228 228 231 / var(--tw-border-opacity, 1))}.border-zinc-200\/70{border-color:rgb(228 228 231 / 0.7)}.border-zinc-200\/80{border-color:rgb(228 228 231 / 0.8)}.border-zinc-200\/90{border-color:rgb(228 228 231 / 0.9)}.border-black\/5{border-color:rgb(0 0 0 / 0.05)}.border-orange-200\/70{border-color:rgb(254 215 170 / 0.7)}.bg-\[\#10B981\]{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-\[\#E6F8F0\]{--tw-bg-opacity:1;background-color:rgb(230 248 240 / var(--tw-bg-opacity, 1))}.bg-\[\#E6F8F0\]\/70{background-color:rgb(230 248 240 / 0.7)}.bg-\[\#F3F4F8\]\/80{background-color:rgb(243 244 248 / 0.8)}.bg-\[\#F97316\]{--tw-bg-opacity:1;background-color:rgb(249 115 22 / var(--tw-bg-opacity, 1))}.bg-\[\#FDECE3\]{--tw-bg-opacity:1;background-color:rgb(253 236 227 / var(--tw-bg-opacity, 1))}.bg-\[\#FDECE3\]\/80{background-color:rgb(253 236 227 / 0.8)}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235 / var(--tw-bg-opacity, 1))}.bg-emerald-400\/15{background-color:rgb(52 211 153 / 0.15)}.bg-emerald-50{--tw-bg-opacity:1;background-color:rgb(236 253 245 / var(--tw-bg-opacity, 1))}.bg-indigo-50{--tw-bg-opacity:1;background-color:rgb(238 242 255 / var(--tw-bg-opacity, 1))}.bg-orange-50{--tw-bg-opacity:1;background-color:rgb(255 247 237 / var(--tw-bg-opacity, 1))}.bg-orange-500\/25{background-color:rgb(249 115 22 / 0.25)}.bg-sky-50{--tw-bg-opacity:1;background-color:rgb(240 249 255 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/10{background-color:rgb(255 255 255 / 0.1)}.bg-white\/95{background-color:rgb(255 255 255 / 0.95)}.bg-zinc-100{--tw-bg-opacity:1;background-color:rgb(244 244 245 / var(--tw-bg-opacity, 1))}.bg-zinc-100\/90{background-color:rgb(244 244 245 / 0.9)}.bg-zinc-200{--tw-bg-opacity:1;background-color:rgb(228 228 231 / var(--tw-bg-opacity, 1))}.bg-zinc-200\/80{background-color:rgb(228 228 231 / 0.8)}.bg-zinc-50{--tw-bg-opacity:1;background-color:rgb(250 250 250 / var(--tw-bg-opacity, 1))}.bg-zinc-50\/80{background-color:rgb(250 250 250 / 0.8)}.bg-zinc-900\/45{background-color:rgb(24 24 27 / 0.45)}.bg-zinc-900\/50{background-color:rgb(24 24 27 / 0.5)}.bg-zinc-900\/95{background-color:rgb(24 24 27 / 0.95)}.bg-black\/50{background-color:rgb(0 0 0 / 0.5)}.bg-orange-50\/90{background-color:rgb(255 247 237 / 0.9)}.bg-orange-500{--tw-bg-opacity:1;background-color:rgb(249 115 22 / var(--tw-bg-opacity, 1))}.bg-white\/25{background-color:rgb(255 255 255 / 0.25)}.bg-zinc-900{--tw-bg-opacity:1;background-color:rgb(24 24 27 / var(--tw-bg-opacity, 1))}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.bg-gradient-to-b{background-image:linear-gradient(to bottom, var(--tw-gradient-stops))}.bg-gradient-to-t{background-image:linear-gradient(to top, var(--tw-gradient-stops))}.from-\[\#10B981\]{--tw-gradient-from:#10B981 var(--tw-gradient-from-position);--tw-gradient-to:rgb(16 185 129 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-\[\#F97316\]{--tw-gradient-from:#F97316 var(--tw-gradient-from-position);--tw-gradient-to:rgb(249 115 22 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-orange-400{--tw-gradient-from:#fb923c var(--tw-gradient-from-position);--tw-gradient-to:rgb(251 146 60 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-orange-500{--tw-gradient-from:#f97316 var(--tw-gradient-from-position);--tw-gradient-to:rgb(249 115 22 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-black\/95{--tw-gradient-from:rgb(0 0 0 / 0.95) var(--tw-gradient-from-position);--tw-gradient-to:rgb(0 0 0 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-white\/20{--tw-gradient-from:rgb(255 255 255 / 0.2) var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 255 255 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-amber-400{--tw-gradient-to:rgb(251 191 36 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #fbbf24 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-orange-500{--tw-gradient-to:rgb(249 115 22 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #f97316 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-black\/75{--tw-gradient-to:rgb(0 0 0 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), rgb(0 0 0 / 0.75) var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-\[\#10B981\]{--tw-gradient-to:#10B981 var(--tw-gradient-to-position)}.to-\[\#EA580C\]{--tw-gradient-to:#EA580C var(--tw-gradient-to-position)}.to-amber-600{--tw-gradient-to:#d97706 var(--tw-gradient-to-position)}.to-emerald-400{--tw-gradient-to:#34d399 var(--tw-gradient-to-position)}.to-emerald-600{--tw-gradient-to:#059669 var(--tw-gradient-to-position)}.to-transparent{--tw-gradient-to:transparent var(--tw-gradient-to-position)}.object-cover{object-fit:cover}.p-0{padding:0px}.p-1{padding:0.25rem}.p-1\.5{padding:0.375rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-0\.5{padding:0.125rem}.px-0\.5{padding-left:0.125rem;padding-right:0.125rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.pb-0\.5{padding-bottom:0.125rem}.pb-1{padding-bottom:0.25rem}.pb-2\.5{padding-bottom:0.625rem}.pl-9{padding-left:2.25rem}.pr-16{padding-right:4rem}.pr-2{padding-right:0.5rem}.pt-0\.5{padding-top:0.125rem}.pt-1{padding-top:0.25rem}.pt-1\.5{padding-top:0.375rem}.pt-2{padding-top:0.5rem}.pt-3{padding-top:0.75rem}.pt-3\.5{padding-top:0.875rem}.text-left{text-align:left}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10\.5px\]{font-size:10.5px}.text-\[10px\]{font-size:10px}.text-\[11\.5px\]{font-size:11.5px}.text-\[11px\]{font-size:11px}.text-\[12px\]{font-size:12px}.text-\[14px\]{font-size:14px}.text-\[15px\]{font-size:15px}.text-\[16px\]{font-size:16px}.text-\[18px\]{font-size:18px}.text-\[19px\]{font-size:19px}.text-\[9\.5px\]{font-size:9.5px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-\[14\.5px\]{font-size:14.5px}.text-\[9px\]{font-size:9px}.font-black{font-weight:900}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.tabular-nums{--tw-numeric-spacing:tabular-nums;font-variant-numeric:var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction)}.leading-\[1\.85\]{line-height:1.85}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.text-\[\#10B981\]{--tw-text-opacity:1;color:rgb(16 185 129 / var(--tw-text-opacity, 1))}.text-\[\#EA580C\]{--tw-text-opacity:1;color:rgb(234 88 12 / var(--tw-text-opacity, 1))}.text-\[\#F97316\]{--tw-text-opacity:1;color:rgb(249 115 22 / var(--tw-text-opacity, 1))}.text-amber-200{--tw-text-opacity:1;color:rgb(253 230 138 / var(--tw-text-opacity, 1))}.text-amber-500{--tw-text-opacity:1;color:rgb(245 158 11 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-emerald-600{--tw-text-opacity:1;color:rgb(5 150 105 / var(--tw-text-opacity, 1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.text-orange-300{--tw-text-opacity:1;color:rgb(253 186 116 / var(--tw-text-opacity, 1))}.text-orange-400{--tw-text-opacity:1;color:rgb(251 146 60 / var(--tw-text-opacity, 1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234 / var(--tw-text-opacity, 1))}.text-sky-600{--tw-text-opacity:1;color:rgb(2 132 199 / var(--tw-text-opacity, 1))}.text-sky-700{--tw-text-opacity:1;color:rgb(3 105 161 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-zinc-200{--tw-text-opacity:1;color:rgb(228 228 231 / var(--tw-text-opacity, 1))}.text-zinc-300{--tw-text-opacity:1;color:rgb(212 212 216 / var(--tw-text-opacity, 1))}.text-zinc-400{--tw-text-opacity:1;color:rgb(161 161 170 / var(--tw-text-opacity, 1))}.text-zinc-500{--tw-text-opacity:1;color:rgb(113 113 122 / var(--tw-text-opacity, 1))}.text-zinc-600{--tw-text-opacity:1;color:rgb(82 82 91 / var(--tw-text-opacity, 1))}.text-zinc-700{--tw-text-opacity:1;color:rgb(63 63 70 / var(--tw-text-opacity, 1))}.text-zinc-800{--tw-text-opacity:1;color:rgb(39 39 42 / var(--tw-text-opacity, 1))}.text-zinc-900{--tw-text-opacity:1;color:rgb(24 24 27 / var(--tw-text-opacity, 1))}.text-amber-200\/90{color:rgb(253 230 138 / 0.9)}.text-amber-300\/90{color:rgb(252 211 77 / 0.9)}.text-blue-200\/90{color:rgb(191 219 254 / 0.9)}.text-cyan-200\/90{color:rgb(165 243 252 / 0.9)}.text-emerald-200\/90{color:rgb(167 243 208 / 0.9)}.text-purple-200\/90{color:rgb(233 213 255 / 0.9)}.text-rose-200\/90{color:rgb(254 205 211 / 0.9)}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72 / var(--tw-text-opacity, 1))}.opacity-70{opacity:0.7}.opacity-85{opacity:0.85}.opacity-95{opacity:0.95}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_8px_22px_rgba\(249c 115c 22c 0\.2\)\]{--tw-shadow:0 8px 22px rgba(249,115,22,0.2);--tw-shadow-colored:0 8px 22px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-orange-500\/20{--tw-shadow-color:rgb(249 115 22 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.shadow-orange-500\/25{--tw-shadow-color:rgb(249 115 22 / 0.25);--tw-shadow:var(--tw-shadow-colored)}.ring-2{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.ring-\[2\.5px\]{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2.5px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.ring-\[\#F97316\]{--tw-ring-opacity:1;--tw-ring-color:rgb(249 115 22 / var(--tw-ring-opacity, 1))}.ring-\[\#F97316\]\/60{--tw-ring-color:rgb(249 115 22 / 0.6)}.ring-offset-2{--tw-ring-offset-width:2px}.ring-offset-\[\#F3F4F8\]{--tw-ring-offset-color:#F3F4F8}.blur-3xl{--tw-blur:blur(64px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow-\[0_0_12px_rgba\(249c 115c 22c 0\.45\)\]{--tw-drop-shadow:drop-shadow(0 0 12px rgba(249,115,22,0.45));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.drop-shadow{--tw-drop-shadow:drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-2xl{--tw-backdrop-blur:blur(40px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-xl{--tw-backdrop-blur:blur(24px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.duration-500{transition-duration:500ms}.duration-200{transition-duration:200ms}.hover\:bg-orange-50:hover{--tw-bg-opacity:1;background-color:rgb(255 247 237 / var(--tw-bg-opacity, 1))}.hover\:bg-zinc-50\/70:hover{background-color:rgb(250 250 250 / 0.7)}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.focus\:border-\[\#F97316\]:focus{--tw-border-opacity:1;border-color:rgb(249 115 22 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.active\:scale-95:active{--tw-scale-x:.95;--tw-scale-y:.95;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.active\:scale-\[0\.99\]:active{--tw-scale-x:0.99;--tw-scale-y:0.99;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.active\:scale-90:active{--tw-scale-x:.9;--tw-scale-y:.9;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.active\:bg-orange-600:active{--tw-bg-opacity:1;background-color:rgb(234 88 12 / var(--tw-bg-opacity, 1))}.active\:bg-zinc-50:active{--tw-bg-opacity:1;background-color:rgb(250 250 250 / var(--tw-bg-opacity, 1))}.active\:opacity-90:active{opacity:0.9}@media (min-width: 640px){.sm\:justify-center{justify-content:center}.sm\:rounded-\[32px\]{border-radius:32px}.sm\:p-4{padding:1rem}}</style></head>
+</head>
 <body class="min-h-screen select-none">
 
   <!-- Dynamic Island Toast Notification -->
@@ -187,7 +188,7 @@
         <span id="header-target-label">និទ្ទេស A</span>
       </button>
 
-      <button onclick="openSettings()" title="កំណត់ API Key &amp; Backup" class="ios-pill-btn w-9 h-9 rounded-full flex items-center justify-center text-zinc-700 active:scale-95 transition">
+      <button onclick="openSettings()" title="កំណត់ API Key & Backup" class="ios-pill-btn w-9 h-9 rounded-full flex items-center justify-center text-zinc-700 active:scale-95 transition">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
       </button>
     </div>
@@ -231,7 +232,7 @@
           <div class="relative w-[94px] h-[94px] shrink-0 flex items-center justify-center">
             <svg class="w-full h-full -rotate-90 drop-shadow-[0_0_12px_rgba(249,115,22,0.45)]" viewBox="0 0 92 92">
               <circle cx="46" cy="46" r="38" stroke="rgba(255,255,255,0.12)" stroke-width="8.5" fill="none"></circle>
-              <circle id="hero-ring-circle" cx="46" cy="46" r="38" stroke="url(#orangeGrad)" stroke-width="8.5" stroke-linecap="round" fill="none" stroke-dasharray="238.76" stroke-dashoffset="238.76" style="transition: stroke-dashoffset 0.75s cubic-bezier(0.22, 1, 0.36, 1); stroke-dashoffset: 238.76;"></circle>
+              <circle id="hero-ring-circle" cx="46" cy="46" r="38" stroke="url(#orangeGrad)" stroke-width="8.5" stroke-linecap="round" fill="none" stroke-dasharray="238.76" stroke-dashoffset="238.76" style="transition: stroke-dashoffset 0.75s cubic-bezier(0.22, 1, 0.36, 1);"></circle>
               <defs>
                 <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stop-color="#FB923C"></stop>
@@ -322,63 +323,7 @@
           </div>
           <button onclick="switchTabByName('calc')" class="px-2.5 py-1 rounded-xl bg-zinc-100 hover:bg-orange-50 text-[#EA580C] text-[11px] font-extrabold active:scale-95 transition">កែពិន្ទុ →</button>
         </div>
-        <div id="dash-subject-chart" class="grid grid-cols-7 gap-1.5 pt-2 items-end h-[116px]">
-          <div onclick="selectSubjectCard('អក្សរសាស្ត្រខ្មែរ')" class="flex flex-col items-center justify-end h-full cursor-pointer group">
-            <span class="text-[9.5px] font-extrabold text-[#EA580C] mb-1 tabular-nums">0%</span>
-            <div class="w-full max-w-[26px] h-[72px] rounded-xl bg-zinc-100/90 p-0.5 flex items-end overflow-hidden ring-2 ring-[#F97316]/60">
-              <div class="w-full rounded-[9px] transition-all duration-500" style="height: 10px; background: #F97316; opacity: 0.25;"></div>
-            </div>
-            <span class="text-[10px] font-extrabold mt-1.5 truncate max-w-full text-[#EA580C]">ខ្មែរ</span>
-          </div>
-        
-          <div onclick="selectSubjectCard('ប្រវត្តិវិទ្យា')" class="flex flex-col items-center justify-end h-full cursor-pointer group">
-            <span class="text-[9.5px] font-extrabold text-zinc-500 mb-1 tabular-nums">0%</span>
-            <div class="w-full max-w-[26px] h-[72px] rounded-xl bg-zinc-100/90 p-0.5 flex items-end overflow-hidden ">
-              <div class="w-full rounded-[9px] transition-all duration-500" style="height: 10px; background: #D97706; opacity: 0.25;"></div>
-            </div>
-            <span class="text-[10px] font-extrabold mt-1.5 truncate max-w-full text-zinc-600">ប្រវត្តិ</span>
-          </div>
-        
-          <div onclick="selectSubjectCard('ភូមិវិទ្យា')" class="flex flex-col items-center justify-end h-full cursor-pointer group">
-            <span class="text-[9.5px] font-extrabold text-zinc-500 mb-1 tabular-nums">0%</span>
-            <div class="w-full max-w-[26px] h-[72px] rounded-xl bg-zinc-100/90 p-0.5 flex items-end overflow-hidden ">
-              <div class="w-full rounded-[9px] transition-all duration-500" style="height: 10px; background: #10B981; opacity: 0.25;"></div>
-            </div>
-            <span class="text-[10px] font-extrabold mt-1.5 truncate max-w-full text-zinc-600">ភូមិ</span>
-          </div>
-        
-          <div onclick="selectSubjectCard('សីលធម៌-ពលរដ្ឋវិជ្ជា')" class="flex flex-col items-center justify-end h-full cursor-pointer group">
-            <span class="text-[9.5px] font-extrabold text-zinc-500 mb-1 tabular-nums">0%</span>
-            <div class="w-full max-w-[26px] h-[72px] rounded-xl bg-zinc-100/90 p-0.5 flex items-end overflow-hidden ">
-              <div class="w-full rounded-[9px] transition-all duration-500" style="height: 10px; background: #8B5CF6; opacity: 0.25;"></div>
-            </div>
-            <span class="text-[10px] font-extrabold mt-1.5 truncate max-w-full text-zinc-600">ពលរដ្ឋ</span>
-          </div>
-        
-          <div onclick="selectSubjectCard('គណិតវិទ្យា')" class="flex flex-col items-center justify-end h-full cursor-pointer group">
-            <span class="text-[9.5px] font-extrabold text-zinc-500 mb-1 tabular-nums">0%</span>
-            <div class="w-full max-w-[26px] h-[72px] rounded-xl bg-zinc-100/90 p-0.5 flex items-end overflow-hidden ">
-              <div class="w-full rounded-[9px] transition-all duration-500" style="height: 10px; background: #F43F5E; opacity: 0.25;"></div>
-            </div>
-            <span class="text-[10px] font-extrabold mt-1.5 truncate max-w-full text-zinc-600">គណិត</span>
-          </div>
-        
-          <div onclick="selectSubjectCard('ផែនដីវិទ្យា')" class="flex flex-col items-center justify-end h-full cursor-pointer group">
-            <span class="text-[9.5px] font-extrabold text-zinc-500 mb-1 tabular-nums">0%</span>
-            <div class="w-full max-w-[26px] h-[72px] rounded-xl bg-zinc-100/90 p-0.5 flex items-end overflow-hidden ">
-              <div class="w-full rounded-[9px] transition-all duration-500" style="height: 10px; background: #06B6D4; opacity: 0.25;"></div>
-            </div>
-            <span class="text-[10px] font-extrabold mt-1.5 truncate max-w-full text-zinc-600">ផែនដី</span>
-          </div>
-        
-          <div onclick="selectSubjectCard('ភាសាអង់គ្លេស')" class="flex flex-col items-center justify-end h-full cursor-pointer group">
-            <span class="text-[9.5px] font-extrabold text-zinc-500 mb-1 tabular-nums">0%</span>
-            <div class="w-full max-w-[26px] h-[72px] rounded-xl bg-zinc-100/90 p-0.5 flex items-end overflow-hidden ">
-              <div class="w-full rounded-[9px] transition-all duration-500" style="height: 10px; background: #3B82F6; opacity: 0.25;"></div>
-            </div>
-            <span class="text-[10px] font-extrabold mt-1.5 truncate max-w-full text-zinc-600">អង់គ្លេស</span>
-          </div>
-        </div>
+        <div id="dash-subject-chart" class="grid grid-cols-7 gap-1.5 pt-2 items-end h-[116px]"></div>
       </div>
 
       <!-- Pomodoro Studio -->
@@ -388,7 +333,7 @@
             <div class="relative w-11 h-11 flex items-center justify-center shrink-0">
               <svg class="w-full h-full -rotate-90" viewBox="0 0 44 44">
                 <circle cx="22" cy="22" r="18" stroke="#F4F4F5" stroke-width="4" fill="none"></circle>
-                <circle id="pomo-ring-circle" cx="22" cy="22" r="18" stroke="#F97316" stroke-width="4" stroke-linecap="round" fill="none" stroke-dasharray="113.1" stroke-dashoffset="0" style="transition: stroke-dashoffset 0.4s linear; stroke-dashoffset: 0px;"></circle>
+                <circle id="pomo-ring-circle" cx="22" cy="22" r="18" stroke="#F97316" stroke-width="4" stroke-linecap="round" fill="none" stroke-dasharray="113.1" stroke-dashoffset="0" style="transition: stroke-dashoffset 0.4s linear;"></circle>
               </svg>
               <span class="absolute text-sm">⏱️</span>
             </div>
@@ -428,189 +373,7 @@
           </div>
           <span class="text-[11px] font-bold text-[#F97316] bg-[#FDECE3]/80 px-2.5 py-0.5 rounded-full">ចុច 📷 ប្តូររូប</span>
         </div>
-        <div id="subject-carousel" class="flex gap-3 overflow-x-auto hide-scroll py-1 px-0.5">
-          <div onclick="selectSubjectCard('អក្សរសាស្ត្រខ្មែរ')" style="background: linear-gradient(155deg, #F97316 0%, #B45309 48%, #18181B 100%);" class="shrink-0 w-[134px] h-[158px] rounded-[24px] p-3 flex flex-col justify-between relative overflow-hidden cursor-pointer transition-all duration-200 active:scale-95 ring-[2.5px] ring-[#F97316] ring-offset-2 ring-offset-[#F3F4F8] shadow-xl">
-            <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="អក្សរសាស្ត្រខ្មែរ" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover opacity-85 pointer-events-none">
-            <div class="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-white/20 to-transparent pointer-events-none"></div>
-            <div class="flex justify-between items-start z-10">
-              <span class="px-2 py-0.5 rounded-lg bg-black/50 backdrop-blur-md text-[9px] font-extrabold text-white tracking-wider border border-white/15">KHMER LIT</span>
-              <div class="flex items-center gap-1">
-                <button type="button" onclick="openSubjectImgModal('អក្សរសាស្ត្រខ្មែរ', event)" title="ដាក់រូប" class="w-5 h-5 rounded-full bg-black/50 backdrop-blur-md text-white text-[10px] flex items-center justify-center border border-white/15 active:scale-90">📷</button>
-                <span class="w-5 h-5 rounded-full bg-[#F97316] text-white text-[11px] font-extrabold flex items-center justify-center shadow-md">✓</span>
-              </div>
-            </div>
-            <div class="absolute right-1.5 top-7 opacity-70 pointer-events-none"><svg class="w-14 h-14 text-amber-200/90" viewBox="0 0 24 24" fill="currentColor"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"></path></svg></div>
-            <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/95 via-black/75 to-transparent pointer-events-none"></div>
-            <div class="relative z-10 text-white space-y-1.5">
-              <div>
-                <p class="text-[12px] font-extrabold leading-tight tracking-tight drop-shadow">អក្សរសាស្ត្រខ្មែរ</p>
-                <div class="flex items-center justify-between text-[10px] text-zinc-200 font-semibold mt-0.5">
-                  <span>Standard 125ព</span>
-                  <span class="text-orange-300 font-extrabold">0%</span>
-                </div>
-              </div>
-              <div class="w-full h-1.5 rounded-full bg-white/25 overflow-hidden">
-                <div class="h-full rounded-full bg-gradient-to-r from-orange-400 to-emerald-400" style="width: 0%"></div>
-              </div>
-            </div>
-          </div>
-        
-          <div onclick="selectSubjectCard('ប្រវត្តិវិទ្យា')" style="background: linear-gradient(155deg, #D97706 0%, #78350F 52%, #0F172A 100%);" class="shrink-0 w-[134px] h-[158px] rounded-[24px] p-3 flex flex-col justify-between relative overflow-hidden cursor-pointer transition-all duration-200 active:scale-95 opacity-95 shadow-md">
-            <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="ប្រវត្តិវិទ្យា" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover opacity-85 pointer-events-none">
-            <div class="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-white/20 to-transparent pointer-events-none"></div>
-            <div class="flex justify-between items-start z-10">
-              <span class="px-2 py-0.5 rounded-lg bg-black/50 backdrop-blur-md text-[9px] font-extrabold text-white tracking-wider border border-white/15">HISTORY</span>
-              <div class="flex items-center gap-1">
-                <button type="button" onclick="openSubjectImgModal('ប្រវត្តិវិទ្យា', event)" title="ដាក់រូប" class="w-5 h-5 rounded-full bg-black/50 backdrop-blur-md text-white text-[10px] flex items-center justify-center border border-white/15 active:scale-90">📷</button>
-                
-              </div>
-            </div>
-            <div class="absolute right-1.5 top-7 opacity-70 pointer-events-none"><svg class="w-14 h-14 text-amber-300/90" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7v2h20V7L12 2zm-7 9v7H3v2h18v-2h-2v-7h-3v7h-2.5v-7h-3v7H8v-7H5z"></path></svg></div>
-            <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/95 via-black/75 to-transparent pointer-events-none"></div>
-            <div class="relative z-10 text-white space-y-1.5">
-              <div>
-                <p class="text-[12px] font-extrabold leading-tight tracking-tight drop-shadow">ប្រវត្តិវិទ្យា</p>
-                <div class="flex items-center justify-between text-[10px] text-zinc-200 font-semibold mt-0.5">
-                  <span>Enhanced 75ព</span>
-                  <span class="text-orange-300 font-extrabold">0%</span>
-                </div>
-              </div>
-              <div class="w-full h-1.5 rounded-full bg-white/25 overflow-hidden">
-                <div class="h-full rounded-full bg-gradient-to-r from-orange-400 to-emerald-400" style="width: 0%"></div>
-              </div>
-            </div>
-          </div>
-        
-          <div onclick="selectSubjectCard('ភូមិវិទ្យា')" style="background: linear-gradient(155deg, #10B981 0%, #065F46 52%, #090D16 100%);" class="shrink-0 w-[134px] h-[158px] rounded-[24px] p-3 flex flex-col justify-between relative overflow-hidden cursor-pointer transition-all duration-200 active:scale-95 opacity-95 shadow-md">
-            <img src="https://images.unsplash.com/photo-1526778537825-5b53797e222e?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="ភូមិវិទ្យា" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover opacity-85 pointer-events-none" style="display: none;">
-            <div class="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-white/20 to-transparent pointer-events-none"></div>
-            <div class="flex justify-between items-start z-10">
-              <span class="px-2 py-0.5 rounded-lg bg-black/50 backdrop-blur-md text-[9px] font-extrabold text-white tracking-wider border border-white/15">GEOGRAPHY</span>
-              <div class="flex items-center gap-1">
-                <button type="button" onclick="openSubjectImgModal('ភូមិវិទ្យា', event)" title="ដាក់រូប" class="w-5 h-5 rounded-full bg-black/50 backdrop-blur-md text-white text-[10px] flex items-center justify-center border border-white/15 active:scale-90">📷</button>
-                
-              </div>
-            </div>
-            <div class="absolute right-1.5 top-7 opacity-70 pointer-events-none"><svg class="w-14 h-14 text-emerald-200/90" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"></path></svg></div>
-            <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/95 via-black/75 to-transparent pointer-events-none"></div>
-            <div class="relative z-10 text-white space-y-1.5">
-              <div>
-                <p class="text-[12px] font-extrabold leading-tight tracking-tight drop-shadow">ភូមិវិទ្យា</p>
-                <div class="flex items-center justify-between text-[10px] text-zinc-200 font-semibold mt-0.5">
-                  <span>Standard 75ព</span>
-                  <span class="text-orange-300 font-extrabold">0%</span>
-                </div>
-              </div>
-              <div class="w-full h-1.5 rounded-full bg-white/25 overflow-hidden">
-                <div class="h-full rounded-full bg-gradient-to-r from-orange-400 to-emerald-400" style="width: 0%"></div>
-              </div>
-            </div>
-          </div>
-        
-          <div onclick="selectSubjectCard('សីលធម៌-ពលរដ្ឋវិជ្ជា')" style="background: linear-gradient(155deg, #8B5CF6 0%, #4C1D95 52%, #111827 100%);" class="shrink-0 w-[134px] h-[158px] rounded-[24px] p-3 flex flex-col justify-between relative overflow-hidden cursor-pointer transition-all duration-200 active:scale-95 opacity-95 shadow-md">
-            <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="សីលធម៌-ពលរដ្ឋវិជ្ជា" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover opacity-85 pointer-events-none">
-            <div class="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-white/20 to-transparent pointer-events-none"></div>
-            <div class="flex justify-between items-start z-10">
-              <span class="px-2 py-0.5 rounded-lg bg-black/50 backdrop-blur-md text-[9px] font-extrabold text-white tracking-wider border border-white/15">CIVICS</span>
-              <div class="flex items-center gap-1">
-                <button type="button" onclick="openSubjectImgModal('សីលធម៌-ពលរដ្ឋវិជ្ជា', event)" title="ដាក់រូប" class="w-5 h-5 rounded-full bg-black/50 backdrop-blur-md text-white text-[10px] flex items-center justify-center border border-white/15 active:scale-90">📷</button>
-                
-              </div>
-            </div>
-            <div class="absolute right-1.5 top-7 opacity-70 pointer-events-none"><svg class="w-14 h-14 text-purple-200/90" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.18C14.4 3.8 13.27 3 12 3z"></path></svg></div>
-            <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/95 via-black/75 to-transparent pointer-events-none"></div>
-            <div class="relative z-10 text-white space-y-1.5">
-              <div>
-                <p class="text-[12px] font-extrabold leading-tight tracking-tight drop-shadow">សីលធម៌-ពលរដ្ឋវិជ្ជា</p>
-                <div class="flex items-center justify-between text-[10px] text-zinc-200 font-semibold mt-0.5">
-                  <span>Standard 75ព</span>
-                  <span class="text-orange-300 font-extrabold">0%</span>
-                </div>
-              </div>
-              <div class="w-full h-1.5 rounded-full bg-white/25 overflow-hidden">
-                <div class="h-full rounded-full bg-gradient-to-r from-orange-400 to-emerald-400" style="width: 0%"></div>
-              </div>
-            </div>
-          </div>
-        
-          <div onclick="selectSubjectCard('គណិតវិទ្យា')" style="background: linear-gradient(155deg, #F43F5E 0%, #881337 52%, #18181B 100%);" class="shrink-0 w-[134px] h-[158px] rounded-[24px] p-3 flex flex-col justify-between relative overflow-hidden cursor-pointer transition-all duration-200 active:scale-95 opacity-95 shadow-md">
-            <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="គណិតវិទ្យា" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover opacity-85 pointer-events-none">
-            <div class="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-white/20 to-transparent pointer-events-none"></div>
-            <div class="flex justify-between items-start z-10">
-              <span class="px-2 py-0.5 rounded-lg bg-black/50 backdrop-blur-md text-[9px] font-extrabold text-white tracking-wider border border-white/15">MATHS</span>
-              <div class="flex items-center gap-1">
-                <button type="button" onclick="openSubjectImgModal('គណិតវិទ្យា', event)" title="ដាក់រូប" class="w-5 h-5 rounded-full bg-black/50 backdrop-blur-md text-white text-[10px] flex items-center justify-center border border-white/15 active:scale-90">📷</button>
-                
-              </div>
-            </div>
-            <div class="absolute right-1.5 top-7 opacity-70 pointer-events-none"><svg class="w-14 h-14 text-rose-200/90" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5.97 4.06L14.09 6l1.41 1.41L16.91 6l1.06 1.06-1.41 1.41 1.41 1.41-1.06 1.06-1.41-1.4-1.41 1.41-1.06-1.06 1.41-1.41-1.41-1.42zm-6.78.66h5v1.5h-5v-1.5zM11.5 16h-2v2H8v-2H6v-1.5h2v-2h1.5v2h2V16zm6.5 1.25h-5v-1.5h5v1.5zm0-2.5h-5v-1.5h5v1.5z"></path></svg></div>
-            <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/95 via-black/75 to-transparent pointer-events-none"></div>
-            <div class="relative z-10 text-white space-y-1.5">
-              <div>
-                <p class="text-[12px] font-extrabold leading-tight tracking-tight drop-shadow">គណិតវិទ្យា</p>
-                <div class="flex items-center justify-between text-[10px] text-zinc-200 font-semibold mt-0.5">
-                  <span>Social 75ព</span>
-                  <span class="text-orange-300 font-extrabold">0%</span>
-                </div>
-              </div>
-              <div class="w-full h-1.5 rounded-full bg-white/25 overflow-hidden">
-                <div class="h-full rounded-full bg-gradient-to-r from-orange-400 to-emerald-400" style="width: 0%"></div>
-              </div>
-            </div>
-          </div>
-        
-          <div onclick="selectSubjectCard('ផែនដីវិទ្យា')" style="background: linear-gradient(155deg, #06B6D4 0%, #155E75 52%, #0F172A 100%);" class="shrink-0 w-[134px] h-[158px] rounded-[24px] p-3 flex flex-col justify-between relative overflow-hidden cursor-pointer transition-all duration-200 active:scale-95 opacity-95 shadow-md">
-            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="ផែនដីវិទ្យា" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover opacity-85 pointer-events-none">
-            <div class="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-white/20 to-transparent pointer-events-none"></div>
-            <div class="flex justify-between items-start z-10">
-              <span class="px-2 py-0.5 rounded-lg bg-black/50 backdrop-blur-md text-[9px] font-extrabold text-white tracking-wider border border-white/15">EARTH SCI</span>
-              <div class="flex items-center gap-1">
-                <button type="button" onclick="openSubjectImgModal('ផែនដីវិទ្យា', event)" title="ដាក់រូប" class="w-5 h-5 rounded-full bg-black/50 backdrop-blur-md text-white text-[10px] flex items-center justify-center border border-white/15 active:scale-90">📷</button>
-                
-              </div>
-            </div>
-            <div class="absolute right-1.5 top-7 opacity-70 pointer-events-none"><svg class="w-14 h-14 text-cyan-200/90" viewBox="0 0 24 24" fill="currentColor"><path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22L14 6z"></path></svg></div>
-            <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/95 via-black/75 to-transparent pointer-events-none"></div>
-            <div class="relative z-10 text-white space-y-1.5">
-              <div>
-                <p class="text-[12px] font-extrabold leading-tight tracking-tight drop-shadow">ផែនដីវិទ្យា</p>
-                <div class="flex items-center justify-between text-[10px] text-zinc-200 font-semibold mt-0.5">
-                  <span>Standard 50ព</span>
-                  <span class="text-orange-300 font-extrabold">0%</span>
-                </div>
-              </div>
-              <div class="w-full h-1.5 rounded-full bg-white/25 overflow-hidden">
-                <div class="h-full rounded-full bg-gradient-to-r from-orange-400 to-emerald-400" style="width: 0%"></div>
-              </div>
-            </div>
-          </div>
-        
-          <div onclick="selectSubjectCard('ភាសាអង់គ្លេស')" style="background: linear-gradient(155deg, #3B82F6 0%, #1E3A8A 52%, #090D16 100%);" class="shrink-0 w-[134px] h-[158px] rounded-[24px] p-3 flex flex-col justify-between relative overflow-hidden cursor-pointer transition-all duration-200 active:scale-95 opacity-95 shadow-md">
-            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="ភាសាអង់គ្លេស" onerror="this.style.display='none'" class="absolute inset-0 w-full h-full object-cover opacity-85 pointer-events-none">
-            <div class="absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-white/20 to-transparent pointer-events-none"></div>
-            <div class="flex justify-between items-start z-10">
-              <span class="px-2 py-0.5 rounded-lg bg-black/50 backdrop-blur-md text-[9px] font-extrabold text-white tracking-wider border border-white/15">ENGLISH</span>
-              <div class="flex items-center gap-1">
-                <button type="button" onclick="openSubjectImgModal('ភាសាអង់គ្លេស', event)" title="ដាក់រូប" class="w-5 h-5 rounded-full bg-black/50 backdrop-blur-md text-white text-[10px] flex items-center justify-center border border-white/15 active:scale-90">📷</button>
-                
-              </div>
-            </div>
-            <div class="absolute right-1.5 top-7 opacity-70 pointer-events-none"><svg class="w-14 h-14 text-blue-200/90" viewBox="0 0 24 24" fill="currentColor"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg></div>
-            <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/95 via-black/75 to-transparent pointer-events-none"></div>
-            <div class="relative z-10 text-white space-y-1.5">
-              <div>
-                <p class="text-[12px] font-extrabold leading-tight tracking-tight drop-shadow">ភាសាអង់គ្លេស</p>
-                <div class="flex items-center justify-between text-[10px] text-zinc-200 font-semibold mt-0.5">
-                  <span>Bonus +25ព</span>
-                  <span class="text-orange-300 font-extrabold">0%</span>
-                </div>
-              </div>
-              <div class="w-full h-1.5 rounded-full bg-white/25 overflow-hidden">
-                <div class="h-full rounded-full bg-gradient-to-r from-orange-400 to-emerald-400" style="width: 0%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div id="subject-carousel" class="flex gap-3 overflow-x-auto hide-scroll py-1 px-0.5"></div>
       </div>
 
       <!-- Segmented Control -->
@@ -625,7 +388,7 @@
           <span>📌</span><span class="truncate">កំណត់ត្រា</span>
         </button>
         <button id="fmenu-tools" onclick="setDashSubSection('tools')" class="py-2 px-1.5 rounded-[16px] text-zinc-600 text-[11px] font-bold flex items-center justify-center gap-1 transition">
-          <span>🤖</span><span class="truncate">AI &amp; ប្រព័ន្ធ</span>
+          <span>🤖</span><span class="truncate">AI & ប្រព័ន្ធ</span>
         </button>
       </div>
 
@@ -637,217 +400,7 @@
           </div>
           <span id="dash-plan-counter" class="text-[12px] font-extrabold text-[#10B981] bg-[#E6F8F0] px-2.5 py-0.5 rounded-full">0 / 7 រួចរាល់</span>
         </div>
-        <div id="dash-dynamic-container" class="ios-surface divide-y divide-zinc-100/80 overflow-hidden">
-            <div class="p-4 flex items-center justify-between gap-3 hover:bg-zinc-50/70 transition">
-              <div class="flex items-center gap-3.5 min-w-0 flex-1">
-                <div onclick="openSubjectImgModal('អក្សរសាស្ត្រខ្មែរ', event)" title="ប្តូររូបមុខវិជ្ជា" style="background: linear-gradient(155deg, #F97316 0%, #B45309 48%, #18181B 100%);" class="w-[54px] h-[54px] rounded-[16px] flex items-center justify-center shrink-0 shadow-sm relative overflow-hidden cursor-pointer border border-black/5">
-                  <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="អក្សរសាស្ត្រខ្មែរ" onerror="this.style.display='none'" class="w-full h-full object-cover">
-                </div>
-                <div class="min-w-0 flex-1">
-                  <div class="flex items-center gap-1.5">
-                    <h3 class="text-[14px] font-extrabold text-zinc-900 truncate">អក្សរសាស្ត្រខ្មែរ</h3>
-                    <span class="px-2 py-0.5 rounded-full bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white text-[9px] font-extrabold shrink-0">125ព</span>
-                  </div>
-                  <div class="flex items-center gap-2 mt-1">
-                    <div class="flex-1 h-1.5 rounded-full bg-zinc-100 overflow-hidden max-w-[110px]">
-                      <div class="h-full rounded-full bg-[#F97316]" style="width: 0%"></div>
-                    </div>
-                    <span class="text-[11px] text-zinc-500 font-bold">0/125ព</span>
-                  </div>
-                  <div class="flex items-center gap-1.5 mt-1.5">
-                    <span class="px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 text-[10px] font-bold">
-                      ○ កំពុងរំលឹក
-                    </span>
-                    <button onclick="jumpToSubjectExam('អក្សរសាស្ត្រខ្មែរ')" class="px-2 py-0.5 rounded-md bg-[#FDECE3] text-[#EA580C] text-[10px] font-bold active:scale-95">▲ វិញ្ញាសា</button>
-                  </div>
-                </div>
-              </div>
-              <label class="ios-switch">
-                <input type="checkbox" onchange="toggleModuleSwitch('អក្សរសាស្ត្រខ្មែរ')">
-                <span class="ios-slider"></span>
-              </label>
-            </div>
-          
-            <div class="p-4 flex items-center justify-between gap-3 hover:bg-zinc-50/70 transition">
-              <div class="flex items-center gap-3.5 min-w-0 flex-1">
-                <div onclick="openSubjectImgModal('ប្រវត្តិវិទ្យា', event)" title="ប្តូររូបមុខវិជ្ជា" style="background: linear-gradient(155deg, #D97706 0%, #78350F 52%, #0F172A 100%);" class="w-[54px] h-[54px] rounded-[16px] flex items-center justify-center shrink-0 shadow-sm relative overflow-hidden cursor-pointer border border-black/5">
-                  <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="ប្រវត្តិវិទ្យា" onerror="this.style.display='none'" class="w-full h-full object-cover">
-                </div>
-                <div class="min-w-0 flex-1">
-                  <div class="flex items-center gap-1.5">
-                    <h3 class="text-[14px] font-extrabold text-zinc-900 truncate">ប្រវត្តិវិទ្យា</h3>
-                    <span class="px-2 py-0.5 rounded-full bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white text-[9px] font-extrabold shrink-0">75ព</span>
-                  </div>
-                  <div class="flex items-center gap-2 mt-1">
-                    <div class="flex-1 h-1.5 rounded-full bg-zinc-100 overflow-hidden max-w-[110px]">
-                      <div class="h-full rounded-full bg-[#F97316]" style="width: 0%"></div>
-                    </div>
-                    <span class="text-[11px] text-zinc-500 font-bold">0/75ព</span>
-                  </div>
-                  <div class="flex items-center gap-1.5 mt-1.5">
-                    <span class="px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 text-[10px] font-bold">
-                      ○ កំពុងរំលឹក
-                    </span>
-                    <button onclick="jumpToSubjectExam('ប្រវត្តិវិទ្យា')" class="px-2 py-0.5 rounded-md bg-[#FDECE3] text-[#EA580C] text-[10px] font-bold active:scale-95">▲ វិញ្ញាសា</button>
-                  </div>
-                </div>
-              </div>
-              <label class="ios-switch">
-                <input type="checkbox" onchange="toggleModuleSwitch('ប្រវត្តិវិទ្យា')">
-                <span class="ios-slider"></span>
-              </label>
-            </div>
-          
-            <div class="p-4 flex items-center justify-between gap-3 hover:bg-zinc-50/70 transition">
-              <div class="flex items-center gap-3.5 min-w-0 flex-1">
-                <div onclick="openSubjectImgModal('ភូមិវិទ្យា', event)" title="ប្តូររូបមុខវិជ្ជា" style="background: linear-gradient(155deg, #10B981 0%, #065F46 52%, #090D16 100%);" class="w-[54px] h-[54px] rounded-[16px] flex items-center justify-center shrink-0 shadow-sm relative overflow-hidden cursor-pointer border border-black/5">
-                  <img src="https://images.unsplash.com/photo-1526778537825-5b53797e222e?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="ភូមិវិទ្យា" onerror="this.style.display='none'" class="w-full h-full object-cover" style="display: none;">
-                </div>
-                <div class="min-w-0 flex-1">
-                  <div class="flex items-center gap-1.5">
-                    <h3 class="text-[14px] font-extrabold text-zinc-900 truncate">ភូមិវិទ្យា</h3>
-                    <span class="px-2 py-0.5 rounded-full bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white text-[9px] font-extrabold shrink-0">75ព</span>
-                  </div>
-                  <div class="flex items-center gap-2 mt-1">
-                    <div class="flex-1 h-1.5 rounded-full bg-zinc-100 overflow-hidden max-w-[110px]">
-                      <div class="h-full rounded-full bg-[#F97316]" style="width: 0%"></div>
-                    </div>
-                    <span class="text-[11px] text-zinc-500 font-bold">0/75ព</span>
-                  </div>
-                  <div class="flex items-center gap-1.5 mt-1.5">
-                    <span class="px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 text-[10px] font-bold">
-                      ○ កំពុងរំលឹក
-                    </span>
-                    <button onclick="jumpToSubjectExam('ភូមិវិទ្យា')" class="px-2 py-0.5 rounded-md bg-[#FDECE3] text-[#EA580C] text-[10px] font-bold active:scale-95">▲ វិញ្ញាសា</button>
-                  </div>
-                </div>
-              </div>
-              <label class="ios-switch">
-                <input type="checkbox" onchange="toggleModuleSwitch('ភូមិវិទ្យា')">
-                <span class="ios-slider"></span>
-              </label>
-            </div>
-          
-            <div class="p-4 flex items-center justify-between gap-3 hover:bg-zinc-50/70 transition">
-              <div class="flex items-center gap-3.5 min-w-0 flex-1">
-                <div onclick="openSubjectImgModal('សីលធម៌-ពលរដ្ឋវិជ្ជា', event)" title="ប្តូររូបមុខវិជ្ជា" style="background: linear-gradient(155deg, #8B5CF6 0%, #4C1D95 52%, #111827 100%);" class="w-[54px] h-[54px] rounded-[16px] flex items-center justify-center shrink-0 shadow-sm relative overflow-hidden cursor-pointer border border-black/5">
-                  <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="សីលធម៌-ពលរដ្ឋវិជ្ជា" onerror="this.style.display='none'" class="w-full h-full object-cover">
-                </div>
-                <div class="min-w-0 flex-1">
-                  <div class="flex items-center gap-1.5">
-                    <h3 class="text-[14px] font-extrabold text-zinc-900 truncate">សីលធម៌-ពលរដ្ឋវិជ្ជា</h3>
-                    <span class="px-2 py-0.5 rounded-full bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white text-[9px] font-extrabold shrink-0">75ព</span>
-                  </div>
-                  <div class="flex items-center gap-2 mt-1">
-                    <div class="flex-1 h-1.5 rounded-full bg-zinc-100 overflow-hidden max-w-[110px]">
-                      <div class="h-full rounded-full bg-[#F97316]" style="width: 0%"></div>
-                    </div>
-                    <span class="text-[11px] text-zinc-500 font-bold">0/75ព</span>
-                  </div>
-                  <div class="flex items-center gap-1.5 mt-1.5">
-                    <span class="px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 text-[10px] font-bold">
-                      ○ កំពុងរំលឹក
-                    </span>
-                    <button onclick="jumpToSubjectExam('សីលធម៌-ពលរដ្ឋវិជ្ជា')" class="px-2 py-0.5 rounded-md bg-[#FDECE3] text-[#EA580C] text-[10px] font-bold active:scale-95">▲ វិញ្ញាសា</button>
-                  </div>
-                </div>
-              </div>
-              <label class="ios-switch">
-                <input type="checkbox" onchange="toggleModuleSwitch('សីលធម៌-ពលរដ្ឋវិជ្ជា')">
-                <span class="ios-slider"></span>
-              </label>
-            </div>
-          
-            <div class="p-4 flex items-center justify-between gap-3 hover:bg-zinc-50/70 transition">
-              <div class="flex items-center gap-3.5 min-w-0 flex-1">
-                <div onclick="openSubjectImgModal('គណិតវិទ្យា', event)" title="ប្តូររូបមុខវិជ្ជា" style="background: linear-gradient(155deg, #F43F5E 0%, #881337 52%, #18181B 100%);" class="w-[54px] h-[54px] rounded-[16px] flex items-center justify-center shrink-0 shadow-sm relative overflow-hidden cursor-pointer border border-black/5">
-                  <img src="https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="គណិតវិទ្យា" onerror="this.style.display='none'" class="w-full h-full object-cover">
-                </div>
-                <div class="min-w-0 flex-1">
-                  <div class="flex items-center gap-1.5">
-                    <h3 class="text-[14px] font-extrabold text-zinc-900 truncate">គណិតវិទ្យា</h3>
-                    <span class="px-2 py-0.5 rounded-full bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white text-[9px] font-extrabold shrink-0">75ព</span>
-                  </div>
-                  <div class="flex items-center gap-2 mt-1">
-                    <div class="flex-1 h-1.5 rounded-full bg-zinc-100 overflow-hidden max-w-[110px]">
-                      <div class="h-full rounded-full bg-[#F97316]" style="width: 0%"></div>
-                    </div>
-                    <span class="text-[11px] text-zinc-500 font-bold">0/75ព</span>
-                  </div>
-                  <div class="flex items-center gap-1.5 mt-1.5">
-                    <span class="px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 text-[10px] font-bold">
-                      ○ កំពុងរំលឹក
-                    </span>
-                    <button onclick="jumpToSubjectExam('គណិតវិទ្យា')" class="px-2 py-0.5 rounded-md bg-[#FDECE3] text-[#EA580C] text-[10px] font-bold active:scale-95">▲ វិញ្ញាសា</button>
-                  </div>
-                </div>
-              </div>
-              <label class="ios-switch">
-                <input type="checkbox" onchange="toggleModuleSwitch('គណិតវិទ្យា')">
-                <span class="ios-slider"></span>
-              </label>
-            </div>
-          
-            <div class="p-4 flex items-center justify-between gap-3 hover:bg-zinc-50/70 transition">
-              <div class="flex items-center gap-3.5 min-w-0 flex-1">
-                <div onclick="openSubjectImgModal('ផែនដីវិទ្យា', event)" title="ប្តូររូបមុខវិជ្ជា" style="background: linear-gradient(155deg, #06B6D4 0%, #155E75 52%, #0F172A 100%);" class="w-[54px] h-[54px] rounded-[16px] flex items-center justify-center shrink-0 shadow-sm relative overflow-hidden cursor-pointer border border-black/5">
-                  <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="ផែនដីវិទ្យា" onerror="this.style.display='none'" class="w-full h-full object-cover">
-                </div>
-                <div class="min-w-0 flex-1">
-                  <div class="flex items-center gap-1.5">
-                    <h3 class="text-[14px] font-extrabold text-zinc-900 truncate">ផែនដីវិទ្យា</h3>
-                    <span class="px-2 py-0.5 rounded-full bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white text-[9px] font-extrabold shrink-0">50ព</span>
-                  </div>
-                  <div class="flex items-center gap-2 mt-1">
-                    <div class="flex-1 h-1.5 rounded-full bg-zinc-100 overflow-hidden max-w-[110px]">
-                      <div class="h-full rounded-full bg-[#F97316]" style="width: 0%"></div>
-                    </div>
-                    <span class="text-[11px] text-zinc-500 font-bold">0/50ព</span>
-                  </div>
-                  <div class="flex items-center gap-1.5 mt-1.5">
-                    <span class="px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 text-[10px] font-bold">
-                      ○ កំពុងរំលឹក
-                    </span>
-                    <button onclick="jumpToSubjectExam('ផែនដីវិទ្យា')" class="px-2 py-0.5 rounded-md bg-[#FDECE3] text-[#EA580C] text-[10px] font-bold active:scale-95">▲ វិញ្ញាសា</button>
-                  </div>
-                </div>
-              </div>
-              <label class="ios-switch">
-                <input type="checkbox" onchange="toggleModuleSwitch('ផែនដីវិទ្យា')">
-                <span class="ios-slider"></span>
-              </label>
-            </div>
-          
-            <div class="p-4 flex items-center justify-between gap-3 hover:bg-zinc-50/70 transition">
-              <div class="flex items-center gap-3.5 min-w-0 flex-1">
-                <div onclick="openSubjectImgModal('ភាសាអង់គ្លេស', event)" title="ប្តូររូបមុខវិជ្ជា" style="background: linear-gradient(155deg, #3B82F6 0%, #1E3A8A 52%, #090D16 100%);" class="w-[54px] h-[54px] rounded-[16px] flex items-center justify-center shrink-0 shadow-sm relative overflow-hidden cursor-pointer border border-black/5">
-                  <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="ភាសាអង់គ្លេស" onerror="this.style.display='none'" class="w-full h-full object-cover">
-                </div>
-                <div class="min-w-0 flex-1">
-                  <div class="flex items-center gap-1.5">
-                    <h3 class="text-[14px] font-extrabold text-zinc-900 truncate">ភាសាអង់គ្លេស</h3>
-                    <span class="px-2 py-0.5 rounded-full bg-gradient-to-r from-[#F97316] to-[#EA580C] text-white text-[9px] font-extrabold shrink-0">+25ព</span>
-                  </div>
-                  <div class="flex items-center gap-2 mt-1">
-                    <div class="flex-1 h-1.5 rounded-full bg-zinc-100 overflow-hidden max-w-[110px]">
-                      <div class="h-full rounded-full bg-[#F97316]" style="width: 0%"></div>
-                    </div>
-                    <span class="text-[11px] text-zinc-500 font-bold">0/50ព</span>
-                  </div>
-                  <div class="flex items-center gap-1.5 mt-1.5">
-                    <span class="px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-500 text-[10px] font-bold">
-                      ○ កំពុងរំលឹក
-                    </span>
-                    <button onclick="jumpToSubjectExam('ភាសាអង់គ្លេស')" class="px-2 py-0.5 rounded-md bg-[#FDECE3] text-[#EA580C] text-[10px] font-bold active:scale-95">▲ វិញ្ញាសា</button>
-                  </div>
-                </div>
-              </div>
-              <label class="ios-switch">
-                <input type="checkbox" onchange="toggleModuleSwitch('ភាសាអង់គ្លេស')">
-                <span class="ios-slider"></span>
-              </label>
-            </div>
-          </div>
+        <div id="dash-dynamic-container" class="ios-surface divide-y divide-zinc-100/80 overflow-hidden"></div>
       </div>
     </section>
 
@@ -860,79 +413,14 @@
           <button id="exam-search-clear" type="button" onclick="clearExamSearch()" class="hidden absolute right-2.5 px-2.5 py-1 rounded-xl bg-zinc-200/80 text-zinc-700 text-[11px] font-bold active:scale-95">លុប</button>
         </div>
 
-        <div class="flex gap-2 overflow-x-auto hide-scroll pb-0.5" id="exam-subj-filters">
-          <button onclick="setExamSubj('ទាំងអស់')" class="shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1 bg-[#F97316] text-white shadow-sm">
-            <span>ទាំងអស់</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[10px] bg-white/25 text-white">7</span>
-          </button>
-        
-          <button onclick="setExamSubj('អក្សរសាស្ត្រខ្មែរ')" class="shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1 bg-zinc-100 text-zinc-700">
-            <span>អក្សរសាស្ត្រខ្មែរ</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[10px] bg-white text-zinc-500">1</span>
-          </button>
-        
-          <button onclick="setExamSubj('ប្រវត្តិវិទ្យា')" class="shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1 bg-zinc-100 text-zinc-700">
-            <span>ប្រវត្តិវិទ្យា</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[10px] bg-white text-zinc-500">1</span>
-          </button>
-        
-          <button onclick="setExamSubj('ភូមិវិទ្យា')" class="shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1 bg-zinc-100 text-zinc-700">
-            <span>ភូមិវិទ្យា</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[10px] bg-white text-zinc-500">1</span>
-          </button>
-        
-          <button onclick="setExamSubj('សីលធម៌-ពលរដ្ឋវិជ្ជា')" class="shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1 bg-zinc-100 text-zinc-700">
-            <span>សីលធម៌-ពលរដ្ឋវិជ្ជា</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[10px] bg-white text-zinc-500">1</span>
-          </button>
-        
-          <button onclick="setExamSubj('គណិតវិទ្យា')" class="shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1 bg-zinc-100 text-zinc-700">
-            <span>គណិតវិទ្យា</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[10px] bg-white text-zinc-500">1</span>
-          </button>
-        
-          <button onclick="setExamSubj('ផែនដីវិទ្យា')" class="shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1 bg-zinc-100 text-zinc-700">
-            <span>ផែនដីវិទ្យា</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[10px] bg-white text-zinc-500">1</span>
-          </button>
-        
-          <button onclick="setExamSubj('ភាសាអង់គ្លេស')" class="shrink-0 px-3 py-1.5 rounded-full text-xs font-bold transition flex items-center gap-1 bg-zinc-100 text-zinc-700">
-            <span>ភាសាអង់គ្លេស</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[10px] bg-white text-zinc-500">1</span>
-          </button>
-        </div>
-        <div class="flex items-center gap-1.5 overflow-x-auto hide-scroll pb-0.5" id="exam-year-filters">
-          <button type="button" onclick="setExamYear('all')" class="shrink-0 px-2.5 py-1 rounded-xl text-[11px] font-extrabold transition flex items-center gap-1 bg-zinc-900 text-white shadow-sm">
-            <span>📅 គ្រប់ឆ្នាំ</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[9px] bg-orange-500 text-white">7</span>
-          </button>
-        
-          <button type="button" onclick="setExamYear('2027')" class="shrink-0 px-2.5 py-1 rounded-xl text-[11px] font-extrabold transition flex items-center gap-1 bg-orange-50/90 text-[#EA580C] border border-orange-200/70">
-            <span>📅 ២០២៧</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[9px] bg-white text-zinc-600">2</span>
-          </button>
-        
-          <button type="button" onclick="setExamYear('2022')" class="shrink-0 px-2.5 py-1 rounded-xl text-[11px] font-extrabold transition flex items-center gap-1 bg-orange-50/90 text-[#EA580C] border border-orange-200/70">
-            <span>📅 ២០២២</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[9px] bg-white text-zinc-600">3</span>
-          </button>
-        
-          <button type="button" onclick="setExamYear('2021')" class="shrink-0 px-2.5 py-1 rounded-xl text-[11px] font-extrabold transition flex items-center gap-1 bg-orange-50/90 text-[#EA580C] border border-orange-200/70">
-            <span>📅 ២០២១</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[9px] bg-white text-zinc-600">2</span>
-          </button>
-        
-          <button type="button" onclick="setExamYear('2014')" class="shrink-0 px-2.5 py-1 rounded-xl text-[11px] font-extrabold transition flex items-center gap-1 bg-orange-50/90 text-[#EA580C] border border-orange-200/70">
-            <span>📅 ២០១៤</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[9px] bg-white text-zinc-600">0</span>
-          </button>
-        </div>
+        <div class="flex gap-2 overflow-x-auto hide-scroll pb-0.5" id="exam-subj-filters"></div>
+        <div class="flex items-center gap-1.5 overflow-x-auto hide-scroll pb-0.5" id="exam-year-filters"></div>
 
         <div class="flex items-center justify-between gap-2 pt-0.5">
           <div class="grid grid-cols-3 gap-1 bg-zinc-100 p-1 rounded-xl text-[11px] flex-1">
             <button onclick="setExamType('all', this)" class="exam-type-btn py-1.5 px-2 rounded-lg bg-[#F97316] text-white font-bold truncate">ទាំងអស់</button>
             <button onclick="setExamType('predict', this)" class="exam-type-btn py-1.5 px-2 rounded-lg text-zinc-600 font-semibold truncate">ព្យាករណ៍ ២០២៧</button>
-            <button onclick="setExamType('past', this)" class="exam-type-btn py-1.5 px-2 rounded-lg text-zinc-600 font-semibold truncate">២០១៤–២០២៦</button>
+            <button onclick="setExamType('past', this)" class="exam-type-btn py-1.5 px-2 rounded-lg text-zinc-600 font-semibold truncate">២០១៤–២០២២</button>
           </div>
           <button id="exam-status-btn" onclick="cycleExamStatusFilter()" class="shrink-0 py-2 px-3 rounded-xl bg-[#FDECE3] text-[#EA580C] text-[11px] font-extrabold active:scale-95 transition">
             <span id="exam-status-label">ស្ថានភាព៖ ទាំងអស់</span>
@@ -940,140 +428,12 @@
         </div>
 
         <div class="flex items-center justify-between text-[11px] px-0.5">
-          <span id="exam-result-count" class="font-bold text-zinc-500">រកឃើញ 22 / 22 វិញ្ញាសា</span>
+          <span id="exam-result-count" class="font-bold text-zinc-500">រកឃើញ 0 វិញ្ញាសា</span>
           <button type="button" onclick="resetAllExamFilters()" class="font-extrabold text-[#F97316] hover:underline">កំណត់តម្រងដើមវិញ</button>
         </div>
       </div>
 
-      <div id="exam-list-container" class="space-y-3">
-        <div class="ios-surface p-4 space-y-2.5">
-          <div class="flex justify-between items-center gap-2">
-            <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#FDECE3] text-[#EA580C] font-bold">អក្សរសាស្ត្រខ្មែរ</span>
-            <span class="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-[#E6F8F0] text-[#10B981]">ព្យាករណ៍ ២០២៧</span>
-          </div>
-          <h3 class="text-sm font-extrabold text-zinc-900">វិញ្ញាសាព្យាករណ៍ ២០២៧៖ តែងសេចក្តីប្រៀបធៀប</h3>
-          <p class="text-[14.5px] text-zinc-700 leading-[1.85] whitespace-pre-line select-text line-clamp-3">ប្រធាន៖ មានមតិលើកឡើងថា «ការអានសៀវភៅបើកទូលាយចំណេះដឹង» ចំណែកមតិមួយទៀតយល់ថា «បទពិសោធជីវិតពិតបង្រៀនមនុស្សឱ្យចេះសម្របខ្លួន»។ ចូរធ្វើការប្រៀបធៀបមតិទាំងពីរ ដោយលើកឧទាហរណ៍ក្នុងអក្សរសិល្ប៍ និងសង្គមមកបញ្ជាក់។</p>
-          <div class="grid grid-cols-3 gap-2 pt-1">
-            <button onclick="openExamViewer('kh-2027-p1')" class="col-span-2 py-2.5 rounded-xl bg-[#F97316] text-white text-xs font-extrabold active:scale-[0.99]">
-              📄 មើលវិញ្ញាសា &amp; អត្រាកំណែពេញ
-            </button>
-            <button onclick="toggleReviewed('kh-2027-p1')" class="py-2.5 rounded-xl text-xs font-bold transition bg-zinc-100 text-zinc-500">
-              ○ ធីករួច
-            </button>
-          </div>
-        </div>
-        <div class="ios-surface p-4 space-y-2.5">
-          <div class="flex justify-between items-center gap-2">
-            <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#FDECE3] text-[#EA580C] font-bold">ប្រវត្តិវិទ្យា</span>
-            <span class="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-sky-50 text-sky-600">បាក់ឌុប ២០២២</span>
-          </div>
-          <h3 class="text-sm font-extrabold text-zinc-900">វិញ្ញាសាប្រវត្តិវិទ្យា បាក់ឌុប ០៥ ធ្នូ ២០២២ (៧៥ពិន្ទុ)</h3>
-          <p class="text-[14.5px] text-zinc-700 leading-[1.85] whitespace-pre-line select-text line-clamp-3">I. តើកត្តាអ្វីខ្លះដែលនាំឱ្យអាណាចក្រហ្វូណនរីកចម្រើនខ្លាំងក្លានិងក្លាយជាមហាអំណាចពាណិជ្ជកម្មនៅអាស៊ីអាគ្នេយ៍?
-II. ចូររៀបរាប់ពីព្រះរាជសកម្មភាពរបស់ព្រះបាទជ័យវរ្ម័នទី៧ ក្នុងការកសាងប្រទេស និងអភិវឌ្ឍសង្គម។
-III. តើសន្និសីទក្រុងហ្សឺណែវ ឆ្នាំ១៩៥៤ បានសម្រេចលទ្ធផលអ្វីខ្លះសម្រាប់ប្រទេសកម្ពុជា?</p>
-          <div class="grid grid-cols-3 gap-2 pt-1">
-            <button onclick="openExamViewer('hi-2022-1')" class="col-span-2 py-2.5 rounded-xl bg-[#F97316] text-white text-xs font-extrabold active:scale-[0.99]">
-              📄 មើលវិញ្ញាសា &amp; អត្រាកំណែពេញ
-            </button>
-            <button onclick="toggleReviewed('hi-2022-1')" class="py-2.5 rounded-xl text-xs font-bold transition bg-zinc-100 text-zinc-500">
-              ○ ធីករួច
-            </button>
-          </div>
-        </div>
-        <div class="ios-surface p-4 space-y-2.5">
-          <div class="flex justify-between items-center gap-2">
-            <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#FDECE3] text-[#EA580C] font-bold">ភូមិវិទ្យា</span>
-            <span class="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-sky-50 text-sky-600">បាក់ឌុប ២០២២</span>
-          </div>
-          <h3 class="text-sm font-extrabold text-zinc-900">វិញ្ញាសាភូមិវិទ្យា បាក់ឌុប ០៥ ធ្នូ ២០២២ (៧៥ពិន្ទុ)</h3>
-          <p class="text-[14.5px] text-zinc-700 leading-[1.85] whitespace-pre-line select-text line-clamp-3">I. ចូរពន្យល់ពីកត្តាភូមិសាស្ត្រដែលធ្វើឱ្យកម្ពុជាមានអាកាសធាតុក្តៅសើមរបៀបមូសុង។
-II. តើធនធានព្រៃឈើនៅកម្ពុជាមានសារៈសំខាន់អ្វីខ្លះដល់សេដ្ឋកិច្ច និងបរិស្ថាន? ហេតុអ្វីបានជាត្រូវការពារ?
-III. ចូរវិភាគពីសក្តានុពលសេដ្ឋកិច្ចនៃតំបន់ឆ្នេរសមុទ្រកម្ពុជា (ខេត្តព្រះសីហនុ កំពត កោះកុង កែប)។</p>
-          <div class="grid grid-cols-3 gap-2 pt-1">
-            <button onclick="openExamViewer('ge-2022-1')" class="col-span-2 py-2.5 rounded-xl bg-[#F97316] text-white text-xs font-extrabold active:scale-[0.99]">
-              📄 មើលវិញ្ញាសា &amp; អត្រាកំណែពេញ
-            </button>
-            <button onclick="toggleReviewed('ge-2022-1')" class="py-2.5 rounded-xl text-xs font-bold transition bg-zinc-100 text-zinc-500">
-              ○ ធីករួច
-            </button>
-          </div>
-        </div>
-        <div class="ios-surface p-4 space-y-2.5">
-          <div class="flex justify-between items-center gap-2">
-            <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#FDECE3] text-[#EA580C] font-bold">គណិតវិទ្យា</span>
-            <span class="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-sky-50 text-sky-600">បាក់ឌុប ២០២២</span>
-          </div>
-          <h3 class="text-sm font-extrabold text-zinc-900">វិញ្ញាសាគណិតវិទ្យា បាក់ឌុប ០៥ ធ្នូ ២០២២ (៧៥ពិន្ទុ)</h3>
-          <p class="text-[14.5px] text-zinc-700 leading-[1.85] whitespace-pre-line select-text line-clamp-3">I. គណនាលីមីត៖ <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mrow><mi>lim</mi><mo>⁡</mo></mrow><mrow><mi>x</mi><mo>→</mo><mn>1</mn></mrow></msub><mfrac><mrow><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mn>1</mn></mrow><mrow><mi>x</mi><mo>−</mo><mn>1</mn></mrow></mfrac></mrow><annotation encoding="application/x-tex">\lim_{x 	o 1} rac{x^3 - 1}{x - 1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1.4213em; vertical-align: -0.4033em;"></span><span class="mop"><span class="mop">lim</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3011em;"><span class="" style="top: -2.55em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="mrel mtight">→</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.0179em;"><span class="" style="top: -2.655em;"><span class="pstrut" style="height: 3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.394em;"><span class="pstrut" style="height: 3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.8913em;"><span class="" style="top: -2.931em; margin-right: 0.0714em;"><span class="pstrut" style="height: 2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.4033em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span> និង <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mrow><mi>lim</mi><mo>⁡</mo></mrow><mrow><mi>x</mi><mo>→</mo><mo>+</mo><mi mathvariant="normal">∞</mi></mrow></msub><mfrac><mrow><mn>2</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><mi>x</mi><mo>−</mo><mn>5</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn></mrow></mfrac></mrow><annotation encoding="application/x-tex">\lim_{x 	o +\infty} rac{2x^2 + 3x - 5}{x^2 - 4}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1.4213em; vertical-align: -0.4033em;"></span><span class="mop"><span class="mop">lim</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.2583em;"><span class="" style="top: -2.55em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="mrel mtight">→</span><span class="mord mtight">+</span><span class="mord mtight">∞</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.2083em;"><span class=""></span></span></span></span></span></span><span class="mspace" style="margin-right: 0.1667em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.0179em;"><span class="" style="top: -2.655em;"><span class="pstrut" style="height: 3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.7463em;"><span class="" style="top: -2.786em; margin-right: 0.0714em;"><span class="pstrut" style="height: 2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mbin mtight">−</span><span class="mord mtight">4</span></span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.394em;"><span class="pstrut" style="height: 3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.8913em;"><span class="" style="top: -2.931em; margin-right: 0.0714em;"><span class="pstrut" style="height: 2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mbin mtight">+</span><span class="mord mtight">3</span><span class="mord mathnormal mtight">x</span><span class="mbin mtight">−</span><span class="mord mtight">5</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.4033em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span>។
-II. ថ្នាក់មួយមានសិស្សប្រុស ៦ នាក់ និងស្រី ៤ នាក់។ គេជ្រើសរើសគណៈកម្មាធិការ ៣ នាក់។ រកប្រូបាបដែលបានសិស្សស្រីយ៉ាងតិច ២ នាក់។
-III. សិក្សាអនុគមន៍ <span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mn>2</mn><mi>x</mi><mo>−</mo><mn>1</mn></mrow><mrow><mi>x</mi><mo>−</mo><mn>1</mn></mrow></mfrac></mrow><annotation encoding="application/x-tex">f(x) = rac{2x - 1}{x - 1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathnormal" style="margin-right: 0.1076em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.2778em;"></span></span><span class="base"><span class="strut" style="height: 1.2484em; vertical-align: -0.4033em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.8451em;"><span class="" style="top: -2.655em;"><span class="pstrut" style="height: 3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.394em;"><span class="pstrut" style="height: 3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mathnormal mtight">x</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.4033em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span> និងសាងសង់ខ្សែកោងតាង។</p>
-          <div class="grid grid-cols-3 gap-2 pt-1">
-            <button onclick="openExamViewer('ma-2022-1')" class="col-span-2 py-2.5 rounded-xl bg-[#F97316] text-white text-xs font-extrabold active:scale-[0.99]">
-              📄 មើលវិញ្ញាសា &amp; អត្រាកំណែពេញ
-            </button>
-            <button onclick="toggleReviewed('ma-2022-1')" class="py-2.5 rounded-xl text-xs font-bold transition bg-zinc-100 text-zinc-500">
-              ○ ធីករួច
-            </button>
-          </div>
-        </div>
-        <div class="ios-surface p-4 space-y-2.5">
-          <div class="flex justify-between items-center gap-2">
-            <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#FDECE3] text-[#EA580C] font-bold">សីលធម៌-ពលរដ្ឋវិជ្ជា</span>
-            <span class="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-sky-50 text-sky-600">បាក់ឌុប ២០២១</span>
-          </div>
-          <h3 class="text-sm font-extrabold text-zinc-900">វិញ្ញាសាសីលធម៌-ពលរដ្ឋវិជ្ជា បាក់ឌុប ២០២១ (៧៥ពិន្ទុ)</h3>
-          <p class="text-[14.5px] text-zinc-700 leading-[1.85] whitespace-pre-line select-text line-clamp-3">I. ដូចម្តេចដែលហៅថា «ប្រជាធិបតេយ្យសេរីពហុបក្ស»? តើសិទ្ធិអ្វីខ្លះជាមូលដ្ឋានគ្រឹះនៃសង្គមប្រជាធិបតេយ្យ?
-II. ចូរពន្យល់ពីសារៈសំខាន់នៃការគោរពសិទ្ធិមនុស្ស និងសិទ្ធិកុមារនៅកម្ពុជា។
-III. តើបុគ្គលម្នាក់ៗត្រូវមានកាតព្វកិច្ចអ្វីខ្លះចំពោះគ្រួសារ សង្គម និងជាតិមាតុភូមិ?</p>
-          <div class="grid grid-cols-3 gap-2 pt-1">
-            <button onclick="openExamViewer('ci-2021-1')" class="col-span-2 py-2.5 rounded-xl bg-[#F97316] text-white text-xs font-extrabold active:scale-[0.99]">
-              📄 មើលវិញ្ញាសា &amp; អត្រាកំណែពេញ
-            </button>
-            <button onclick="toggleReviewed('ci-2021-1')" class="py-2.5 rounded-xl text-xs font-bold transition bg-zinc-100 text-zinc-500">
-              ○ ធីករួច
-            </button>
-          </div>
-        </div>
-        <div class="ios-surface p-4 space-y-2.5">
-          <div class="flex justify-between items-center gap-2">
-            <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#FDECE3] text-[#EA580C] font-bold">ផែនដីវិទ្យា</span>
-            <span class="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-sky-50 text-sky-600">បាក់ឌុប ២០២១</span>
-          </div>
-          <h3 class="text-sm font-extrabold text-zinc-900">វិញ្ញាសាផែនដីវិទ្យា បាក់ឌុប ២០២១ (៥០ពិន្ទុ)</h3>
-          <p class="text-[14.5px] text-zinc-700 leading-[1.85] whitespace-pre-line select-text line-clamp-3">I. តើស្រទាប់ផ្សេងៗនៃបរិយាកាសផែនដីមានអ្វីខ្លះ? ចូរបញ្ជាក់ស្រទាប់ដែលមានជីវិតរស់នៅ។
-II. ដូចម្តេចដែលហៅថា វដ្តទឹកក្នុងធម្មជាតិ? ចូរពណ៌នាពីដំណាក់កាលសំខាន់ៗនៃវដ្តទឹក។</p>
-          <div class="grid grid-cols-3 gap-2 pt-1">
-            <button onclick="openExamViewer('ea-2021-1')" class="col-span-2 py-2.5 rounded-xl bg-[#F97316] text-white text-xs font-extrabold active:scale-[0.99]">
-              📄 មើលវិញ្ញាសា &amp; អត្រាកំណែពេញ
-            </button>
-            <button onclick="toggleReviewed('ea-2021-1')" class="py-2.5 rounded-xl text-xs font-bold transition bg-zinc-100 text-zinc-500">
-              ○ ធីករួច
-            </button>
-          </div>
-        </div>
-        <div class="ios-surface p-4 space-y-2.5">
-          <div class="flex justify-between items-center gap-2">
-            <span class="text-[11px] px-2.5 py-0.5 rounded-full bg-[#FDECE3] text-[#EA580C] font-bold">ភាសាអង់គ្លេស</span>
-            <span class="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-[#E6F8F0] text-[#10B981]">ព្យាករណ៍ ២០២៧</span>
-          </div>
-          <h3 class="text-sm font-extrabold text-zinc-900">វិញ្ញាសាភាសាអង់គ្លេស បាក់ឌុប ២០២៧ (៥០ពិន្ទុ)</h3>
-          <p class="text-[14.5px] text-zinc-700 leading-[1.85] whitespace-pre-line select-text line-clamp-3">Part 1: Reading &amp; Vocabulary (25 points)
-Fill in the blanks with appropriate words: education, technology, success, future, environment.
-Education plays a vital role in shaping our (1)..... Students must develop digital (2)...... and protect our (3)...... for sustainable development.
-
-Part 2: Grammar &amp; Writing (25 points)
-1. If students study hard every day, they (pass) the exam.
-2. Angkor Wat (visit) by millions of tourists annually.
-3. Write a short paragraph about the benefits of reading books.</p>
-          <div class="grid grid-cols-3 gap-2 pt-1">
-            <button onclick="openExamViewer('en-2027-p1')" class="col-span-2 py-2.5 rounded-xl bg-[#F97316] text-white text-xs font-extrabold active:scale-[0.99]">
-              📄 មើលវិញ្ញាសា &amp; អត្រាកំណែពេញ
-            </button>
-            <button onclick="toggleReviewed('en-2027-p1')" class="py-2.5 rounded-xl text-xs font-bold transition bg-zinc-100 text-zinc-500">
-              ○ ធីករួច
-            </button>
-          </div>
-        </div></div>
+      <div id="exam-list-container" class="space-y-3"></div>
     </section>
 
     <!-- ==================== TAB 3: QCM & FLASHCARDS ==================== -->
@@ -1095,18 +455,10 @@ Part 2: Grammar &amp; Writing (25 points)
         <div class="ios-surface p-5 space-y-4">
           <div class="flex justify-between items-center">
             <span id="qcm-subj" class="text-xs px-3 py-1 rounded-full bg-[#FDECE3] text-[#EA580C] font-bold">ប្រវត្តិវិទ្យា</span>
-            <span id="qcm-progress" class="text-xs text-zinc-400 font-medium">សំណួរទី 1 / 4</span>
+            <span id="qcm-progress" class="text-xs text-zinc-400 font-medium">សំណួរទី 1</span>
           </div>
-          <h2 id="qcm-question" class="text-[15px] font-bold text-zinc-900 leading-relaxed">តើសម័យអង្គរចាប់ផ្តើមឡើងនៅឆ្នាំណា?</h2>
-          <div id="qcm-options" class="space-y-2.5">
-        <button onclick="checkQcm(0, this)" class="w-full text-left p-3.5 rounded-2xl bg-zinc-50 border border-zinc-200/80 text-sm font-medium text-zinc-800 active:scale-[0.99] transition">គ.ស. ៨០២</button>
-      
-        <button onclick="checkQcm(1, this)" class="w-full text-left p-3.5 rounded-2xl bg-zinc-50 border border-zinc-200/80 text-sm font-medium text-zinc-800 active:scale-[0.99] transition">គ.ស. ១៤៣១</button>
-      
-        <button onclick="checkQcm(2, this)" class="w-full text-left p-3.5 rounded-2xl bg-zinc-50 border border-zinc-200/80 text-sm font-medium text-zinc-800 active:scale-[0.99] transition">គ.ស. ១៨៦៣</button>
-      
-        <button onclick="checkQcm(3, this)" class="w-full text-left p-3.5 rounded-2xl bg-zinc-50 border border-zinc-200/80 text-sm font-medium text-zinc-800 active:scale-[0.99] transition">គ.ស. ១៩៥៣</button>
-      </div>
+          <h2 id="qcm-question" class="text-[15px] font-bold text-zinc-900 leading-relaxed"></h2>
+          <div id="qcm-options" class="space-y-2.5"></div>
           <div id="qcm-explain" class="hidden p-3.5 rounded-2xl bg-[#E6F8F0] text-xs text-zinc-700 leading-relaxed"></div>
         </div>
 
@@ -1114,32 +466,16 @@ Part 2: Grammar &amp; Writing (25 points)
       </div>
 
       <div id="study-cards-box" class="hidden space-y-4">
-        <div class="flex gap-2 overflow-x-auto hide-scroll pb-1" id="card-subj-filters">
-        <button onclick="setCardFilter('ទាំងអស់')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#F97316] text-white">ទាំងអស់</button>
-      
-        <button onclick="setCardFilter('អក្សរសាស្ត្រខ្មែរ')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white text-zinc-600 shadow-sm">អក្សរសាស្ត្រខ្មែរ</button>
-      
-        <button onclick="setCardFilter('ប្រវត្តិវិទ្យា')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white text-zinc-600 shadow-sm">ប្រវត្តិវិទ្យា</button>
-      
-        <button onclick="setCardFilter('ភូមិវិទ្យា')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white text-zinc-600 shadow-sm">ភូមិវិទ្យា</button>
-      
-        <button onclick="setCardFilter('សីលធម៌-ពលរដ្ឋវិជ្ជា')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white text-zinc-600 shadow-sm">សីលធម៌-ពលរដ្ឋវិជ្ជា</button>
-      
-        <button onclick="setCardFilter('គណិតវិទ្យា')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white text-zinc-600 shadow-sm">គណិតវិទ្យា</button>
-      
-        <button onclick="setCardFilter('ផែនដីវិទ្យា')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white text-zinc-600 shadow-sm">ផែនដីវិទ្យា</button>
-      
-        <button onclick="setCardFilter('ភាសាអង់គ្លេស')" class="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white text-zinc-600 shadow-sm">ភាសាអង់គ្លេស</button>
-      </div>
+        <div class="flex gap-2 overflow-x-auto hide-scroll pb-1" id="card-subj-filters"></div>
 
         <div onclick="flipCard()" class="ios-surface p-6 min-h-[230px] flex flex-col justify-between cursor-pointer active:scale-[0.99] transition">
           <div class="flex justify-between items-center">
             <span id="card-subject" class="text-xs px-3 py-1 rounded-full bg-[#FDECE3] text-[#EA580C] font-bold">ប្រវត្តិវិទ្យា</span>
             <span id="card-side-label" class="text-[11px] text-zinc-400">សំណួរ / រូបមន្ត</span>
           </div>
-          <div id="card-content" class="text-base leading-relaxed font-semibold text-zinc-900 text-center my-4 select-text">ឆ្នាំ គ.ស. ៨០២</div>
+          <div id="card-content" class="text-base leading-relaxed font-semibold text-zinc-900 text-center my-4 select-text whitespace-pre-line"></div>
           <div class="flex justify-between items-center text-xs text-zinc-400">
-            <span id="card-counter">1 / 3</span>
+            <span id="card-counter">1 / 1</span>
             <span class="text-[#F97316] font-bold">ប៉ះកាតដើម្បីត្រឡប់ ↻</span>
           </div>
         </div>
@@ -1171,7 +507,7 @@ Part 2: Grammar &amp; Writing (25 points)
     <section id="tab-ai" class="hidden space-y-4">
       <div class="ios-surface p-4 space-y-3">
         <div class="flex justify-between items-center">
-          <h2 class="text-sm font-extrabold text-zinc-900">🤖 គ្រូ AI ជំនួយការ &amp; កែតែងសេចក្តី</h2>
+          <h2 class="text-sm font-extrabold text-zinc-900">🤖 គ្រូ AI ជំនួយការ & កែតែងសេចក្តី</h2>
           <select id="ai-mode" class="bg-[#FDECE3] rounded-xl px-2.5 py-1 text-xs text-[#EA580C] font-bold">
             <option value="tutor">ពន្យល់មេរៀន</option>
             <option value="essay">កែតែងសេចក្តី (80ព)</option>
@@ -1213,7 +549,7 @@ Part 2: Grammar &amp; Writing (25 points)
 
   </main>
 
-  <!-- ==================== EXAM FULL TEXT VIEWER MODAL ==================== -->
+  <!-- ==================== EXAM FULL VIEWER MODAL (TEXT + PAGES IMAGES) ==================== -->
   <div id="exam-viewer" class="hidden fixed inset-0 z-[60] bg-zinc-900/50 backdrop-blur-sm flex flex-col items-center justify-end sm:justify-center p-0 sm:p-4">
     <div class="ios-surface w-full max-w-2xl max-h-[92vh] flex flex-col rounded-t-[32px] sm:rounded-[32px] overflow-hidden shadow-2xl bg-white">
       <div class="p-4 border-b border-zinc-100 flex items-center justify-between bg-zinc-50/80">
@@ -1223,16 +559,30 @@ Part 2: Grammar &amp; Writing (25 points)
         </div>
         <button onclick="closeExamViewer()" class="w-9 h-9 rounded-full bg-zinc-200 text-zinc-700 font-black text-sm flex items-center justify-center shrink-0 active:scale-95">✕</button>
       </div>
-      <div class="flex-1 overflow-auto p-5 space-y-4" id="exam-viewer-scroll">
-        <div class="space-y-2">
-          <h4 class="text-xs font-bold text-zinc-400 uppercase tracking-wider">សំណួរវិញ្ញាសាពេញលេញ</h4>
-          <div id="exam-reader-question" class="p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 text-[15px] text-zinc-900 leading-[1.85] whitespace-pre-line select-text"></div>
+
+      <div class="flex-1 overflow-auto p-4 sm:p-5 space-y-4" id="exam-viewer-scroll">
+        <!-- ប្រអប់បង្ហាញរូបភាពទំព័រវិញ្ញាសាពី Folder pages/ -->
+        <div id="exam-reader-pages-wrap" class="hidden space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-extrabold text-[#EA580C] uppercase tracking-wider">📸 ទំព័រវិញ្ញាសា និងអត្រាកំណែផ្លូវការ</h4>
+            <span id="exam-pages-badge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#FDECE3] text-[#EA580C]"></span>
+          </div>
+          <div id="exam-reader-pages" class="space-y-3"></div>
         </div>
-        <div class="space-y-2">
-          <h4 class="text-xs font-bold text-[#10B981] uppercase tracking-wider">អត្រាកំណែ &amp; ចម្លើយពេញលេញ (Official Key)</h4>
-          <div id="exam-reader-answer" class="p-4 rounded-2xl bg-[#E6F8F0]/70 border border-emerald-200 text-[15px] text-zinc-900 leading-[1.85] whitespace-pre-line select-text"></div>
+
+        <!-- ប្រអប់បង្ហាញអត្ថបទសំណួរ (សម្រាប់វិញ្ញាសាព្យាករណ៍ ២០២៧) -->
+        <div id="exam-reader-text-wrap" class="space-y-4">
+          <div class="space-y-2">
+            <h4 class="text-xs font-bold text-zinc-400 uppercase tracking-wider">សំណួរវិញ្ញាសាពេញលេញ</h4>
+            <div id="exam-reader-question" class="p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 text-[15px] text-zinc-900 leading-[1.85] whitespace-pre-line select-text"></div>
+          </div>
+          <div class="space-y-2">
+            <h4 class="text-xs font-bold text-[#10B981] uppercase tracking-wider">អត្រាកំណែ & ចម្លើយពេញលេញ (Official Key)</h4>
+            <div id="exam-reader-answer" class="p-4 rounded-2xl bg-[#E6F8F0]/70 border border-emerald-200 text-[15px] text-zinc-900 leading-[1.85] whitespace-pre-line select-text"></div>
+          </div>
         </div>
       </div>
+
       <div class="p-3 border-t border-zinc-100 bg-zinc-50/80 flex justify-between items-center">
         <span class="text-[11px] text-zinc-500 font-medium">ស្តង់ដារក្រសួងអប់រំ យុវជន និងកីឡា</span>
         <button onclick="closeExamViewer()" class="px-5 py-2.5 rounded-2xl bg-[#F97316] text-white text-xs font-extrabold active:scale-95">រួចរាល់</button>
@@ -1263,7 +613,7 @@ Part 2: Grammar &amp; Writing (25 points)
   <!-- ==================== SETTINGS MODAL ==================== -->
   <div id="settings-modal" class="hidden fixed inset-0 z-50 bg-zinc-900/45 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="ios-surface p-5 w-full max-w-sm space-y-4">
-      <h3 class="font-extrabold text-base text-zinc-900">⚙️ កំណត់ API Key &amp; Backup</h3>
+      <h3 class="font-extrabold text-base text-zinc-900">⚙️ កំណត់ API Key & Backup</h3>
       <p class="text-xs text-zinc-500 leading-relaxed">រក្សាទុក OpenAI API Key និង Export/Import ទិន្នន័យសិក្សាទាំងអស់បាន។</p>
       <input id="api-key-input" type="password" placeholder="sk-..." class="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-3.5 py-2.5 text-sm">
       <div class="grid grid-cols-2 gap-2 pt-1">
@@ -1293,7 +643,7 @@ Part 2: Grammar &amp; Writing (25 points)
       </button>
       <button id="nav-study" onclick="switchTab('study', this)" class="nav-btn py-2 rounded-full text-zinc-700 flex flex-col items-center justify-center gap-0.5 transition">
         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path></svg>
-        <span class="text-[10px] font-bold">តេស្ត &amp; កាត</span>
+        <span class="text-[10px] font-bold">តេស្ត & កាត</span>
       </button>
       <button id="nav-ai" onclick="switchTab('ai', this)" class="nav-btn py-2 rounded-full text-zinc-700 flex flex-col items-center justify-center gap-0.5 transition">
         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z"></path></svg>
@@ -1307,185 +657,24 @@ Part 2: Grammar &amp; Writing (25 points)
   </div>
 
   <script>
-    // Comprehensive Complete Exam Archive (2014-2027) with Full Questions & Answer Keys
-    window.BACII_SUBJECTS = [
+    // ទាញយកទិន្នន័យពី exams_data.js (ប្រើទិន្នន័យបម្រុងបើរក exams_data.js មិនឃើញ)
+    const SUBJECTS = window.BACII_SUBJECTS || [
       { name: "អក្សរសាស្ត្រខ្មែរ", short: "ខ្មែរ", max: 125, inputId: "g-khmer", color: "#F97316" },
       { name: "ប្រវត្តិវិទ្យា", short: "ប្រវត្តិ", max: 75, inputId: "g-hist", color: "#D97706" },
       { name: "ភូមិវិទ្យា", short: "ភូមិ", max: 75, inputId: "g-geo", color: "#10B981" },
       { name: "សីលធម៌-ពលរដ្ឋវិជ្ជា", short: "ពលរដ្ឋ", max: 75, inputId: "g-civ", color: "#8B5CF6" },
       { name: "គណិតវិទ្យា", short: "គណិត", max: 75, inputId: "g-math", color: "#F43F5E" },
       { name: "ផែនដីវិទ្យា", short: "ផែនដី", max: 50, inputId: "g-earth", color: "#06B6D4" },
-      { name: "ភាសាអង់គ្លេស", short: "អង់គ្លេស", max: 50, bonusMax: true, color: "#3B82F6" }
+      { name: "ភាសាអង់គ្លេស", short: "អង់គ្លេស", max: 50, inputId: "g-eng", bonusMax: true, color: "#3B82F6" }
     ];
 
-    window.EXAM_ARCHIVE = [
-      {
-        id: "kh-2027-p1", subj: "អក្សរសាស្ត្រខ្មែរ", type: "predict", tag: "ព្យាករណ៍ ២០២៧",
-        title: "វិញ្ញាសាព្យាករណ៍ ២០២៧៖ តែងសេចក្តីប្រៀបធៀប",
-        question: "ប្រធាន៖ មានមតិលើកឡើងថា «ការអានសៀវភៅបើកទូលាយចំណេះដឹង» ចំណែកមតិមួយទៀតយល់ថា «បទពិសោធជីវិតពិតបង្រៀនមនុស្សឱ្យចេះសម្របខ្លួន»។ ចូរធ្វើការប្រៀបធៀបមតិទាំងពីរ ដោយលើកឧទាហរណ៍ក្នុងអក្សរសិល្ប៍ និងសង្គមមកបញ្ជាក់។",
-        answer: "១. សេចក្តីផ្តើម (១៥ពិន្ទុ)៖ លើកមតិទាំងពីរ ចំណូលបញ្ហា និងចោទបញ្ហា។\n២. តួសេចក្តី (៨៥ពិន្ទុ)៖\n• ពន្យល់មតិទី១៖ ការអានសៀវភៅផ្តល់ទ្រឹស្តី ចំណេះដឹងទូទៅ និងគតិបណ្ឌិត។\n• ពន្យល់មតិទី២៖ បទពិសោធជីវិតពិតផ្តល់ការអនុវត្តផ្ទាល់ ភាពធន់ និងការដោះស្រាយបញ្ហាជាក់ស្តែង។\n• ប្រៀបធៀប៖ លក្ខណៈដូច (ជាប្រភពពុទ្ធិអភិវឌ្ឍខ្លួន) និងលក្ខណៈខុស (ទ្រឹស្តី vs អនុវត្ត) រួចសំយោគបំពេញឱ្យគ្នា។\n៣. សេចក្តីបញ្ចប់ (១៥ពិន្ទុ)៖ វាយតម្លៃប្រធាន និងផ្តល់មតិរួមសម្រាប់យុវជន។",
-        pageFrom: 1, pageTo: 4
-      },
-      {
-        id: "hi-2022-1", subj: "ប្រវត្តិវិទ្យា", type: "past", tag: "បាក់ឌុប ២០២២",
-        title: "វិញ្ញាសាប្រវត្តិវិទ្យា បាក់ឌុប ០៥ ធ្នូ ២០២២ (៧៥ពិន្ទុ)",
-        question: "I. តើកត្តាអ្វីខ្លះដែលនាំឱ្យអាណាចក្រហ្វូណនរីកចម្រើនខ្លាំងក្លានិងក្លាយជាមហាអំណាចពាណិជ្ជកម្មនៅអាស៊ីអាគ្នេយ៍?\nII. ចូររៀបរាប់ពីព្រះរាជសកម្មភាពរបស់ព្រះបាទជ័យវរ្ម័នទី៧ ក្នុងការកសាងប្រទេស និងអភិវឌ្ឍសង្គម។\nIII. តើសន្និសីទក្រុងហ្សឺណែវ ឆ្នាំ១៩៥៤ បានសម្រេចលទ្ធផលអ្វីខ្លះសម្រាប់ប្រទេសកម្ពុជា?",
-        answer: "អត្រាកំណែផ្លូវការ (៧៥ពិន្ទុ)\nI. កត្តាហ្វូណនរីកចម្រើន៖ ទីតាំងភូមិសាស្ត្រអំណោយផល (ផ្លូវសមុទ្ររវាងឥណ្ឌានិងចិន) ការអភិវឌ្ឍប្រព័ន្ធប្រឡាយទឹកសម្រាប់កសិកម្ម និងភាពប៉ិនប្រសប់ខាងនយោបាយ និងពាណិជ្ជកម្មអន្តរជាតិ។\nII. សកម្មភាពព្រះបាទជ័យវរ្ម័នទី៧៖ កសាងមន្ទីរពេទ្យ (១០២ អរោគ្យសាលា) ធម្មសាលា (សាលាសំណាក់ ១២១) ផ្លូវថ្នល់ ស្ពាន និងស្ថាបនារាជធានីអង្គរធំ (ប្រាសាទបាយ័ន)។\nIII. សន្និសីទហ្សឺណែវ ១៩៥៤៖ បញ្ចប់សង្គ្រាមឥណ្ឌូចិន បារាំងនិងប្រទេសចូលរួមទទួលស្គាល់ឯករាជ្យ អធិបតេយ្យភាព និងបូរណភាពទឹកដីរបស់កម្ពុជាពេញលេញ។",
-        pageFrom: 1, pageTo: 6
-      },
-      {
-        id: "ge-2022-1", subj: "ភូមិវិទ្យា", type: "past", tag: "បាក់ឌុប ២០២២",
-        title: "វិញ្ញាសាភូមិវិទ្យា បាក់ឌុប ០៥ ធ្នូ ២០២២ (៧៥ពិន្ទុ)",
-        question: "I. ចូរពន្យល់ពីកត្តាភូមិសាស្ត្រដែលធ្វើឱ្យកម្ពុជាមានអាកាសធាតុក្តៅសើមរបៀបមូសុង។\nII. តើធនធានព្រៃឈើនៅកម្ពុជាមានសារៈសំខាន់អ្វីខ្លះដល់សេដ្ឋកិច្ច និងបរិស្ថាន? ហេតុអ្វីបានជាត្រូវការពារ?\nIII. ចូរវិភាគពីសក្តានុពលសេដ្ឋកិច្ចនៃតំបន់ឆ្នេរសមុទ្រកម្ពុជា (ខេត្តព្រះសីហនុ កំពត កោះកុង កែប)។",
-        answer: "អត្រាកំណែផ្លូវការ (៧៥ពិន្ទុ)\nI. អាកាសធាតุมូសុង៖ កម្ពុជាស្ថិតក្នុងតំបន់ត្រូពិច កាំរស្មីព្រះអាទិត្យចំជិតថ្ងៃត្រង់ ទទួលបានខ្យល់មូសុងនិរតី (នាំទឹកភ្លៀង) និងខ្យល់មូសុងឦសាន (ស្ងួតត្រជាក់)។\nII. សារៈសំខាន់ព្រៃឈើ៖ ជាជម្រកជីវចម្រើន រក្សាលំនឹងអាកាសធាតុ ធនធានឈើ និងទប់ទឹកភ្លៀងមិនឱ្យហូរបាក់ដី។\nIII. សក្តានុពលឆ្នេរសមុទ្រ៖ ទេសចរណ៍ឆ្នេរនិងកោះ កំពង់ផែអន្តរជាតិទឹកជ្រៅ វារីវប្បកម្ម និងឧស្សាហកម្មកែច្នៃ។",
-        pageFrom: 1, pageTo: 5
-      },
-      {
-        id: "ma-2022-1", subj: "គណិតវិទ្យា", type: "past", tag: "បាក់ឌុប ២០២២",
-        title: "វិញ្ញាសាគណិតវិទ្យា បាក់ឌុប ០៥ ធ្នូ ២០២២ (៧៥ពិន្ទុ)",
-        question: "I. គណនាលីមីត៖ $\lim_{x \to 1} \frac{x^3 - 1}{x - 1}$ និង $\lim_{x \to +\infty} \frac{2x^2 + 3x - 5}{x^2 - 4}$។\nII. ថ្នាក់មួយមានសិស្សប្រុស ៦ នាក់ និងស្រី ៤ នាក់។ គេជ្រើសរើសគណៈកម្មាធិការ ៣ នាក់។ រកប្រូបាបដែលបានសិស្សស្រីយ៉ាងតិច ២ នាក់។\nIII. សិក្សាអនុគមន៍ $f(x) = \frac{2x - 1}{x - 1}$ និងសាងសង់ខ្សែកោងតាង។",
-        answer: "អត្រាកំណែផ្លូវការ (៧៥ពិន្ទុ)\nI. $\lim_{x \to 1} \frac{(x-1)(x^2+x+1)}{x-1} = 3$ និង $\lim_{x \to +\infty} \frac{2x^2}{x^2} = 2$។\nII. $n(S) = C_{10}^3 = 120$។ ករណីស្រី ២ ប្រុស ១ ($C_4^2 \times C_6^1 = 36$) + ស្រី ៣ ($C_4^3 = 4$) ＝ ៤០។ $P = \frac{40}{120} = \frac{1}{3}$។\nIII. ដែនកំណត់ $x \neq 1$, អនុគមន៍កើនដាច់ខាត, អាស៊ីមតូតឈរ $x=1$, អាស៊ីមតូតផ្តេក $y=2$។",
-        pageFrom: 1, pageTo: 8
-      },
-      {
-        id: "ci-2021-1", subj: "សីលធម៌-ពលរដ្ឋវិជ្ជា", type: "past", tag: "បាក់ឌុប ២០២១",
-        title: "វិញ្ញាសាសីលធម៌-ពលរដ្ឋវិជ្ជា បាក់ឌុប ២០២១ (៧៥ពិន្ទុ)",
-        question: "I. ដូចម្តេចដែលហៅថា «ប្រជាធិបតេយ្យសេរីពហុបក្ស»? តើសិទ្ធិអ្វីខ្លះជាមូលដ្ឋានគ្រឹះនៃសង្គមប្រជាធិបតេយ្យ?\nII. ចូរពន្យល់ពីសារៈសំខាន់នៃការគោរពសិទ្ធិមនុស្ស និងសិទ្ធិកុមារនៅកម្ពុជា។\nIII. តើបុគ្គលម្នាក់ៗត្រូវមានកាតព្វកិច្ចអ្វីខ្លះចំពោះគ្រួសារ សង្គម និងជាតិមាតុភូមិ?",
-        answer: "អត្រាកំណែផ្លូវការ (៧៥ពិន្ទុ)\nI. ប្រជាធិបតេយ្យសេរីពហុបក្ស៖ ប្រព័ន្ធដឹកនាំដែលអំណាចជារបស់ប្រជាជន មានការបោះឆ្នោតទៀងទាត់ដោយសេរី ត្រឹមត្រូវ និងយុត្តិធម៌។\nII. សារៈសំខាន់សិទ្ធិមនុស្ស៖ ធានាកិត្តិយស សេចក្តីថ្លៃថ្នូរ សេរីភាពក្នុងការបញ្ចេញមតិ និងការអភិវឌ្ឍបុគ្គលិកលក្ខណៈ។\nIII. កាតព្វកិច្ចពលរដ្ឋ៖ គោរពច្បាប់ ថែរក្សាសន្តិសុខសង្គម ការពារបរិស្ថាន និងចូលរួមអភិវឌ្ឍជាតិ។",
-        pageFrom: 1, pageTo: 3
-      },
-      {
-        id: "ea-2021-1", subj: "ផែនដីវិទ្យា", type: "past", tag: "បាក់ឌុប ២០២១",
-        title: "វិញ្ញាសាផែនដីវិទ្យា បាក់ឌុប ២០២១ (៥០ពិន្ទុ)",
-        question: "I. តើស្រទាប់ផ្សេងៗនៃបរិយាកាសផែនដីមានអ្វីខ្លះ? ចូរបញ្ជាក់ស្រទាប់ដែលមានជីវិតរស់នៅ។\nII. ដូចម្តេចដែលហៅថា វដ្តទឹកក្នុងធម្មជាតិ? ចូរពណ៌នាពីដំណាក់កាលសំខាន់ៗនៃវដ្តទឹក។",
-        answer: "អត្រាកំណែផ្លូវការ (៥០ពិន្ទុ)\nI. ស្រទាប់បរិយាកាស៖ Troposphere (ស្រទាប់មានជីវិតរស់នៅ), Stratosphere (មានអូហ្សូន), Mesosphere, Thermosphere, Exosphere។\nII. វដ្តទឹក៖ ការហួតទឹក (Evaporation), ការខ្សោះប្រហោងទឹកពីស្លឹកឈើ (Transpiration), ការ condensing (ឃ្លុំជាពពក), និងទឹកភ្លៀងធ្លាក់ចុះមកវិញ (Precipitation)។",
-        pageFrom: 1, pageTo: 4
-      },
-      {
-        id: "en-2027-p1", subj: "ភាសាអង់គ្លេស", type: "predict", tag: "ព្យាករណ៍ ២០២៧",
-        title: "វិញ្ញាសាភាសាអង់គ្លេស បាក់ឌុប ២០២៧ (៥០ពិន្ទុ)",
-        question: "Part 1: Reading & Vocabulary (25 points)\nFill in the blanks with appropriate words: education, technology, success, future, environment.\nEducation plays a vital role in shaping our (1)..... Students must develop digital (2)...... and protect our (3)...... for sustainable development.\n\nPart 2: Grammar & Writing (25 points)\n1. If students study hard every day, they (pass) the exam.\n2. Angkor Wat (visit) by millions of tourists annually.\n3. Write a short paragraph about the benefits of reading books.",
-        answer: "Answer Key (50 pts)\nPart 1: 1. future  2. technology  3. environment\nPart 2: 1. will pass (First Conditional)  2. is visited (Passive Voice)\nWriting: Reading books broadens our horizon, enhances vocabulary, and builds strong critical thinking skills for academic success.",
-        pageFrom: 1, pageTo: 3
-      },
-      {
-        id: "kh-2014-1", subj: "អក្សរសាស្ត្រខ្មែរ", type: "past", tag: "បាក់ឌុប ២០១៤ (លើកទី១)",
-        title: "វិញ្ញាសាអក្សរសាស្ត្រខ្មែរ បាក់ឌុប ០៤ សីហា ២០១៤ (១២៥ពិន្ទុ)",
-        question: "វិញ្ញាសាអក្សរសាស្ត្រខ្មែរ បាក់ឌុប ០៤ សីហា ២០១៤ (១២៥ពិន្ទុ)\nវិញ្ញាសាពេញ ព្រមទាំងអត្រាកំណែ/ចម្លើយ មាន ៥ ទំព័រ (ទំព័រ 341–345)។",
-        answer: "អត្រាកំណែ/ចម្លើយផ្លូវការ ឆ្នាំ ២០១៤ លើកទី១ (ទំព័រ 341–345)។",
-        pageFrom: 341, pageTo: 345
-      },
-      {
-        id: "ma-2014-1", subj: "គណិតវិទ្យា", type: "past", tag: "បាក់ឌុប ២០១៤ (លើកទី១)",
-        title: "វិញ្ញាសាគណិតវិទ្យា បាក់ឌុប ០៤ សីហា ២០១៤ (៧៥ពិន្ទុ)",
-        question: "វិញ្ញាសាគណិតវិទ្យា បាក់ឌុប ០៤ សីហា ២០១៤ (៧៥ពិន្ទុ)\nវិញ្ញាសាពេញ ព្រមទាំងអត្រាកំណែ/ចម្លើយ មាន ៥ ទំព័រ (ទំព័រ 346–350)។",
-        answer: "អត្រាកំណែ/ចម្លើយផ្លូវការ ឆ្នាំ ២០១៤ លើកទី១ (ទំព័រ 346–350)។",
-        pageFrom: 346, pageTo: 350
-      },
-      {
-        id: "ge-2014-1", subj: "ភូមិវិទ្យា", type: "past", tag: "បាក់ឌុប ២០១៤ (លើកទី១)",
-        title: "វិញ្ញាសាភូមិវិទ្យា បាក់ឌុប ០៤ សីហា ២០១៤ (៧៥ពិន្ទុ)",
-        question: "វិញ្ញាសាភូមិវិទ្យា បាក់ឌុប ០៤ សីហា ២០១៤ (៧៥ពិន្ទុ)\nវិញ្ញាសាពេញ ព្រមទាំងអត្រាកំណែ/ចម្លើយ មាន ៦ ទំព័រ (ទំព័រ 351–356)។",
-        answer: "អត្រាកំណែ/ចម្លើយផ្លូវការ ឆ្នាំ ២០១៤ លើកទី១ (ទំព័រ 351–356)។",
-        pageFrom: 351, pageTo: 356
-      },
-      {
-        id: "hi-2014-1", subj: "ប្រវត្តិវិទ្យា", type: "past", tag: "បាក់ឌុប ២០១៤ (លើកទី១)",
-        title: "វិញ្ញាសាប្រវត្តិវិទ្យា បាក់ឌុប ០៤ សីហា ២០១៤ (៧៥ពិន្ទុ)",
-        question: "វិញ្ញាសាប្រវត្តិវិទ្យា បាក់ឌុប ០៤ សីហា ២០១៤ (៧៥ពិន្ទុ)\nវិញ្ញាសាពេញ ព្រមទាំងអត្រាកំណែ/ចម្លើយ មាន ៧ ទំព័រ (ទំព័រ 357–363)។",
-        answer: "អត្រាកំណែ/ចម្លើយផ្លូវការ ឆ្នាំ ២០១៤ លើកទី១ (ទំព័រ 357–363)។",
-        pageFrom: 357, pageTo: 363
-      },
-      {
-        id: "ci-2014-1", subj: "សីលធម៌-ពលរដ្ឋវិជ្ជា", type: "past", tag: "បាក់ឌុប ២០១៤ (លើកទី១)",
-        title: "វិញ្ញាសាសីលធម៌-ពលរដ្ឋវិជ្ជា បាក់ឌុប ០៤ សីហា ២០១៤ (៧៥ពិន្ទុ)",
-        question: "វិញ្ញាសាសីលធម៌-ពលរដ្ឋវិជ្ជា បាក់ឌុប ០៤ សីហា ២០១៤ (៧៥ពិន្ទុ)\nវិញ្ញាសាពេញ ព្រមទាំងអត្រាកំណែ/ចម្លើយ មាន ៩ ទំព័រ (ទំព័រ 364–372)។",
-        answer: "អត្រាកំណែ/ចម្លើយផ្លូវការ ឆ្នាំ ២០១៤ លើកទី១ (ទំព័រ 364–372)។",
-        pageFrom: 364, pageTo: 372
-      },
-      {
-        id: "fr-2014-1", subj: "ភាសាបារាំង", type: "past", tag: "បាក់ឌុប ២០១៤ (លើកទី១)",
-        title: "វិញ្ញាសាភាសាបារាំង បាក់ឌុប ០៤ សីហា ២០១៤ (៥០ពិន្ទុ)",
-        question: "វិញ្ញាសាភាសាបារាំង បាក់ឌុប ០៤ សីហា ២០១៤ (៥០ពិន្ទុ)\nវិញ្ញាសាពេញ ព្រមទាំងអត្រាកំណែ/ចម្លើយ មាន ៤ ទំព័រ (ទំព័រ 373–376)។",
-        answer: "អត្រាកំណែ/ចម្លើយផ្លូវការ ឆ្នាំ ២០១៤ លើកទី១ (ទំព័រ 373–376)។",
-        pageFrom: 373, pageTo: 376
-      },
-      {
-        id: "en-2014-1", subj: "ភាសាអង់គ្លេស", type: "past", tag: "បាក់ឌុប ២០១៤ (លើកទី១)",
-        title: "វិញ្ញាសាភាសាអង់គ្លេស បាក់ឌុប ០៤ សីហា ២០១៤ (៥០ពិន្ទុ)",
-        question: "វិញ្ញាសាភាសាអង់គ្លេស បាក់ឌុប ០៤ សីហា ២០១៤ (៥០ពិន្ទុ)\nវិញ្ញាសាពេញ ព្រមទាំងអត្រាកំណែ/ចម្លើយ មាន ៥ ទំព័រ (ទំព័រ 377–381)។",
-        answer: "អត្រាកំណែ/ចម្លើយផ្លូវការ ឆ្នាំ ២០១៤ លើកទី១ (ទំព័រ 377–381)។",
-        pageFrom: 377, pageTo: 381
-      },
-      {
-        id: "kh-2014-2", subj: "អក្សរសាស្ត្រខ្មែរ", type: "past", tag: "បាក់ឌុប ២០១៤ (លើកទី២)",
-        title: "វិញ្ញាសាអក្សរសាស្ត្រខ្មែរ បាក់ឌុប ១៣ តុលា ២០១៤ (១២៥ពិន្ទុ)",
-        question: "វិញ្ញាសាអក្សរសាស្ត្រខ្មែរ បាក់ឌុប ១៣ តុលា ២០១៤ (១២៥ពិន្ទុ)\nវិញ្ញាសាពេញ ព្រមទាំងអត្រាកំណែ/ចម្លើយ មាន ៤ ទំព័រ (ទំព័រ 307–310)។",
-        answer: "អត្រាកំណែ/ចម្លើយផ្លូវការ ឆ្នាំ ២០១៤ លើកទី២ (ទំព័រ 307–310)។",
-        pageFrom: 307, pageTo: 310
-      },
-      {
-        id: "ma-2014-2", subj: "គណិតវិទ្យា", type: "past", tag: "បាក់ឌុប ២០១៤ (លើកទី២)",
-        title: "វិញ្ញាសាគណិតវិទ្យា បាក់ឌុប ១៣ តុលា ២០១៤ (៧៥ពិន្ទុ)",
-        question: "វិញ្ញាសាគណិតវិទ្យា បាក់ឌុប ១៣ តុលា ២០១៤ (៧៥ពិន្ទុ)\nវិញ្ញាសាពេញ ព្រមទាំងអត្រាកំណែ/ចម្លើយ មាន ៤ ទំព័រ (ទំព័រ 311–314)។",
-        answer: "អត្រាកំណែ/ចម្លើយផ្លូវការ ឆ្នាំ ២០១៤ លើកទី២ (ទំព័រ 311–314)។",
-        pageFrom: 311, pageTo: 314
-      },
-      {
-        id: "ph-2014-2", subj: "រូបវិទ្យា", type: "past", tag: "បាក់ឌុប ២០១៤ (លើកទី២)",
-        title: "វិញ្ញាសារូបវិទ្យា បាក់ឌុប ១៣ តុលា ២០១៤ (៥០ពិន្ទុ)",
-        question: "វិញ្ញាសារូបវិទ្យា បាក់ឌុប ១៣ តុលា ២០១៤ (៥០ពិន្ទុ)\nវិញ្ញាសាពេញ ព្រមទាំងអត្រាកំណែ/ចម្លើយ មាន ៤ ទំព័រ (ទំព័រ 315–318)។",
-        answer: "អត្រាកំណែ/ចម្លើយផ្លូវការ ឆ្នាំ ២០១៤ លើកទី២ (ទំព័រ 315–318)។",
-        pageFrom: 315, pageTo: 318
-      },
-      {
-        id: "ge-2014-2", subj: "ភូមិវិទ្យា", type: "past", tag: "បាក់ឌុប ២០១៤ (លើកទី២)",
-        title: "វិញ្ញាសាភូមិវិទ្យា បាក់ឌុប ១៣ តុលា ២០១៤ (៧៥ពិន្ទុ)",
-        question: "វិញ្ញាសាភូមិវិទ្យា បាក់ឌុប ១៣ តុលា ២០១៤ (៧៥ពិន្ទុ)\nវិញ្ញាសាពេញ ព្រមទាំងអត្រាកំណែ/ចម្លើយ មាន ៣ ទំព័រ (ទំព័រ 319–321)។",
-        answer: "អត្រាកំណែ/ចម្លើយផ្លូវការ ឆ្នាំ ២០១៤ លើកទី២ (ទំព័រ 319–321)។",
-        pageFrom: 319, pageTo: 321
-      },
-      {
-        id: "hi-2014-2", subj: "ប្រវត្តិវិទ្យា", type: "past", tag: "បាក់ឌុប ២០១៤ (លើកទី២)",
-        title: "វិញ្ញាសាប្រវត្តិវិទ្យា បាក់ឌុប ១៣ តុលា ២០១៤ (៧៥ពិន្ទុ)",
-        question: "វិញ្ញាសាប្រវត្តិវិទ្យា បាក់ឌុប ១៣ តុលា ២០១៤ (៧៥ពិន្ទុ)\nវិញ្ញាសាពេញ ព្រមទាំងអត្រាកំណែ/ចម្លើយ មាន ៤ ទំព័រ (ទំព័រ 322–325)។",
-        answer: "អត្រាកំណែ/ចម្លើយផ្លូវការ ឆ្នាំ ២០១៤ លើកទី២ (ទំព័រ 322–325)។",
-        pageFrom: 322, pageTo: 325
-      },
-      {
-        id: "ci-2014-2", subj: "សីលធម៌-ពលរដ្ឋវិជ្ជា", type: "past", tag: "បាក់ឌុប ២០១៤ (លើកទី២)",
-        title: "វិញ្ញាសាសីលធម៌-ពលរដ្ឋវិជ្ជា បាក់ឌុប ១៣ តុលា ២០១៤ (៧៥ពិន្ទុ)",
-        question: "វិញ្ញាសាសីលធម៌-ពលរដ្ឋវិជ្ជា បាក់ឌុប ១៣ តុលា ២០១៤ (៧៥ពិន្ទុ)\nវិញ្ញាសាពេញ ព្រមទាំងអត្រាកំណែ/ចម្លើយ មាន ៧ ទំព័រ (ទំព័រ 326–332)។",
-        answer: "អត្រាកំណែ/ចម្លើយផ្លូវការ ឆ្នាំ ២០១៤ លើកទី២ (ទំព័រ 326–332)។",
-        pageFrom: 326, pageTo: 332
-      },
-      {
-        id: "fr-2014-2", subj: "ភាសាបារាំង", type: "past", tag: "បាក់ឌុប ២០១៤ (លើកទី២)",
-        title: "វិញ្ញាសាភាសាបារាំង បាក់ឌុប ១៣ តុលា ២០១៤ (៥០ពិន្ទុ)",
-        question: "វិញ្ញាសាភាសាបារាំង បាក់ឌុប ១៣ តុលា ២០១៤ (៥០ពិន្ទុ)\nវិញ្ញាសាពេញ ព្រមទាំងអត្រាកំណែ/ចម្លើយ មាន ៤ ទំព័រ (ទំព័រ 333–336)។",
-        answer: "អត្រាកំណែ/ចម្លើយផ្លូវការ ឆ្នាំ ២០១៤ លើកទី២ (ទំព័រ 333–336)។",
-        pageFrom: 333, pageTo: 336
-      },
-      {
-        id: "en-2014-2", subj: "ភាសាអង់គ្លេស", type: "past", tag: "បាក់ឌុប ២០១៤ (លើកទី២)",
-        title: "វិញ្ញាសាភាសាអង់គ្លេស បាក់ឌុប ១៣ តុលា ២០១៤ (៥០ពិន្ទុ)",
-        question: "វិញ្ញាសាភាសាអង់គ្លេស បាក់ឌុប ១៣ តុលា ២០១៤ (៥០ពិន្ទុ)\nវិញ្ញាសាពេញ ព្រមទាំងអត្រាកំណែ/ចម្លើយ មាន ៤ ទំព័រ (ទំព័រ 337–340)។",
-        answer: "អត្រាកំណែ/ចម្លើយផ្លូវការ ឆ្នាំ ២០១៤ លើកទី២ (ទំព័រ 337–340)។",
-        pageFrom: 337, pageTo: 340
-      }
+    const EXAM_PAGES_DIR = window.EXAM_PAGES_DIR || "pages/";
+    const EXAMS = window.EXAM_ARCHIVE || [];
+    const QCMS = window.QCM_BANK || [
+      { subj: "ប្រវត្តិវិទ្យា", q: "តើសម័យអង្គរចាប់ផ្តើមឡើងនៅឆ្នាំណា?", opts: ["គ.ស. ៨០២", "គ.ស. ១៤៣១", "គ.ស. ១៨៦៣", "គ.ស. ១៩៥៣"], ans: 0, exp: "ព្រះបាទជ័យវរ្ម័នទី២ ប្រកាសឯករាជ្យនៅភ្នំគូលែន ក្នុងឆ្នាំ គ.ស. ៨០២។" }
     ];
-
-    window.QCM_BANK = [
-      { subj: "ប្រវត្តិវិទ្យា", q: "តើសម័យអង្គរចាប់ផ្តើមឡើងនៅឆ្នាំណា?", opts: ["គ.ស. ៨០២", "គ.ស. ១៤៣១", "គ.ស. ១៨៦៣", "គ.ស. ១៩៥៣"], ans: 0, exp: "ព្រះបាទជ័យវរ្ម័នទី២ ប្រកាសឯករាជ្យនៅភ្នំគូលែន ក្នុងឆ្នាំ គ.ស. ៨០២។" },
-      { subj: "គណិតវិទ្យា", q: "តើ $C_4^2$ ស្មើប៉ុន្មាន?", opts: ["4", "6", "8", "12"], ans: 1, exp: "$C_4^2 = \frac{4!}{2!(4-2)!} = 6$។" },
-      { subj: "ភូមិវិទ្យា", q: "តើបឹងទន្លេសាបមានតួនាទីជួយទប់ទឹកជំនន់នៅរដូវណា?", opts: ["រដូវប្រាំង", "រដូវវស្សា", "រដូវក្តៅ", "គ្រប់រដូវ"], ans: 1, exp: "នៅរដូវវស្សា ទឹកទន្លេមេគង្គហូរចូលបឹងទន្លេសាប ជួយកាត់បន្ថយទឹកជំនន់។" },
-      { subj: "អក្សរសាស្ត្រខ្មែរ", q: "តើអ្នកណាជាអ្នកនិពន្ធរឿង កុលាបប៉ៃលិន?", opts: ["ញ៉ុក ថែម", "នូ ហាជី", "ប៉ាង ខេង", "ព្រះបាទអង្គឌួង"], ans: 1, exp: "លោក នូ ហាជី ជាអ្នកនិពន្ធនវានុវត្តន៍រឿង កុលាបប៉ៃលិន (ចេញផ្សាយឆ្នាំ ១៩៣៦)។" }
-    ];
-
-    window.DEFAULT_FLASHCARDS = [
-      { subj: "ប្រវត្តិវិទ្យា", q: "ឆ្នាំ គ.ស. ៨០២", a: "ព្រះបាទជ័យវរ្ម័នទី២ ឡើងគ្រងរាជ្យ និងស្ថាបនាអាណាចក្រអង្គរនៅភ្នំគូលែន។" },
-      { subj: "គណិតវិទ្យា", q: "រូបមន្តបន្សំ $C_n^k$", a: "$$C_n^k = \frac{n!}{k!(n-k)!}$$" },
-      { subj: "អក្សរសាស្ត្រខ្មែរ", q: "រចនាសម្ព័ន្ធតែងសេចក្តី (៨០ព)", a: "ផ្តើមសេចក្តី (១០ព) • តួសេចក្តី (៥០ព) • បញ្ចប់សេចក្តី (១០ព) • រចនាបថ & អក្ខរាវិរុទ្ធ (១០ព)។" }
+    const DEFAULT_CARDS = window.DEFAULT_FLASHCARDS || [
+      { subj: "ប្រវត្តិវិទ្យា", q: "ឆ្នាំ គ.ស. ៨០២", a: "ព្រះបាទជ័យវរ្ម័នទី២ ឡើងគ្រងរាជ្យ និងស្ថាបនាអាណាចក្រអង្គរនៅភ្នំគូលែន។" }
     ];
 
     const DEFAULT_SUBJECT_IMAGES = {
@@ -1499,7 +688,7 @@ Part 2: Grammar &amp; Writing (25 points)
     };
 
     const SUBJECT_CARDS_META = [
-      { name: "អក្សរសាស្ត្រខ្មែរ", short: "ខ្មែរ", titleTop: "KHMER LIT", sub: "Standard 125ព", badge: "125ព", color: "#F97316", bg: "linear-gradient(155deg, #F97316 0%, #B45309 48%, #18181B 100%)", svgArt: `<svg class="w-14 h-14 text-amber-200/90" viewBox="0 0 24 24" fill="currentColor"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>` },
+      { name: "អក្សរសាស្ត្រខ្មែរ", short: "ខ្មែរ", titleTop: "KHMER LIT", sub: "Standard 125ព", badge: "125ព", color: "#F97316", bg: "linear-gradient(155deg, #F97316 0%, #B45309 48%, #18181B 100%)", svgArt: `<svg class="w-14 h-14 text-amber-200/90" viewBox="0 0 24 24" fill="currentColor"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>` },
       { name: "ប្រវត្តិវិទ្យា", short: "ប្រវត្តិ", titleTop: "HISTORY", sub: "Enhanced 75ព", badge: "75ព", color: "#D97706", bg: "linear-gradient(155deg, #D97706 0%, #78350F 52%, #0F172A 100%)", svgArt: `<svg class="w-14 h-14 text-amber-300/90" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7v2h20V7L12 2zm-7 9v7H3v2h18v-2h-2v-7h-3v7h-2.5v-7h-3v7H8v-7H5z"/></svg>` },
       { name: "ភូមិវិទ្យា", short: "ភូមិ", titleTop: "GEOGRAPHY", sub: "Standard 75ព", badge: "75ព", color: "#10B981", bg: "linear-gradient(155deg, #10B981 0%, #065F46 52%, #090D16 100%)", svgArt: `<svg class="w-14 h-14 text-emerald-200/90" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>` },
       { name: "សីលធម៌-ពលរដ្ឋវិជ្ជា", short: "ពលរដ្ឋ", titleTop: "CIVICS", sub: "Standard 75ព", badge: "75ព", color: "#8B5CF6", bg: "linear-gradient(155deg, #8B5CF6 0%, #4C1D95 52%, #111827 100%)", svgArt: `<svg class="w-14 h-14 text-purple-200/90" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-1.27 0-2.4.8-2.82 2H3v2h1.95L2 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3L6.05 7h3.12c.33.85.98 1.5 1.83 1.83V20H2v2h20v-2h-9V8.82c.85-.32 1.5-.97 1.82-1.82h3.13L15 14c-.47 2 1 3 3.5 3s4.06-1 3.5-3l-2.95-7H21V5h-6.18C14.4 3.8 13.27 3 12 3z"/></svg>` },
@@ -1508,10 +697,6 @@ Part 2: Grammar &amp; Writing (25 points)
       { name: "ភាសាអង់គ្លេស", short: "អង់គ្លេស", titleTop: "ENGLISH", sub: "Bonus +25ព", badge: "+25ព", color: "#3B82F6", bg: "linear-gradient(155deg, #3B82F6 0%, #1E3A8A 52%, #090D16 100%)", svgArt: `<svg class="w-14 h-14 text-blue-200/90" viewBox="0 0 24 24" fill="currentColor"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>` }
     ];
 
-    const SUBJECTS = window.BACII_SUBJECTS;
-    const EXAMS = window.EXAM_ARCHIVE;
-    const QCMS = window.QCM_BANK;
-    const DEFAULT_CARDS = window.DEFAULT_FLASHCARDS;
     const ALL_SUBJ_NAMES = ['ទាំងអស់', ...new Set([...SUBJECT_CARDS_META.map(s => s.name), ...EXAMS.map(e => e.subj)])];
 
     function updateLiveHeaderAndCountdown() {
@@ -1902,7 +1087,7 @@ Part 2: Grammar &amp; Writing (25 points)
         heading.textContent = 'វិញ្ញាសាពេញលេញ (២០១៤–២០២៧)';
         const revCount = Object.values(reviewedExams).filter(Boolean).length;
         counter.textContent = `បានអាន ${revCount} / ${EXAMS.length}`;
-        box.innerHTML = EXAMS.slice(0, 6).map(ex => `
+        box.innerHTML = EXAMS.slice(0, 8).map(ex => `
           <div class="p-3.5 flex items-center justify-between gap-3">
             <div class="min-w-0">
               <span class="text-[10px] font-extrabold text-[#EA580C] bg-[#FDECE3] px-2 py-0.5 rounded-full">${ex.subj} • ${ex.tag}</span>
@@ -1940,7 +1125,7 @@ Part 2: Grammar &amp; Writing (25 points)
         box.innerHTML = `
           <div class="p-3.5 flex items-center justify-between gap-3">
             <div>
-              <p class="text-[13px] font-extrabold text-zinc-900">🤖 គ្រូ AI ពន្យល់មេរៀន &amp; កែតែងសេចក្តី</p>
+              <p class="text-[13px] font-extrabold text-zinc-900">🤖 គ្រូ AI ពន្យល់មេរៀន & កែតែងសេចក្តី</p>
               <p class="text-[11px] text-zinc-500">សួរសំណួរ ឬផ្ញើអត្ថបទតែងសេចក្តីឱ្យ AI ជួយកែ</p>
             </div>
             <button onclick="openEssayGraderQuick()" class="px-3 py-2 rounded-xl bg-[#FDECE3] text-[#EA580C] text-xs font-extrabold">បើក AI</button>
@@ -2020,7 +1205,7 @@ Part 2: Grammar &amp; Writing (25 points)
 
       const yearBox = document.getElementById('exam-year-filters');
       if (yearBox) {
-        const years = ['2027', '2022', '2021', '2014'];
+        const years = ['2027', '2022', '2021', '2019', '2018', '2017', '2016', '2015', '2014'];
         yearBox.innerHTML = `
           <button type="button" onclick="setExamYear('all')" class="shrink-0 px-2.5 py-1 rounded-xl text-[11px] font-extrabold transition flex items-center gap-1 ${selectedExamYear === 'all' ? 'bg-zinc-900 text-white shadow-sm' : 'bg-orange-50/90 text-[#EA580C] border border-orange-200/70'}">
             <span>📅 គ្រប់ឆ្នាំ</span>
@@ -2126,6 +1311,8 @@ Part 2: Grammar &amp; Writing (25 points)
 
       container.innerHTML = filtered.map(e => {
         const done = !!reviewedExams[e.id];
+        const hasPages = typeof e.pageFrom === 'number' && typeof e.pageTo === 'number';
+        const pageCount = hasPages ? (e.pageTo - e.pageFrom + 1) : 0;
         return `
           <div class="ios-surface p-4 space-y-2.5">
             <div class="flex justify-between items-center gap-2">
@@ -2136,7 +1323,7 @@ Part 2: Grammar &amp; Writing (25 points)
             <p class="text-[14.5px] text-zinc-700 leading-[1.85] whitespace-pre-line select-text line-clamp-3">${e.question.replace(/\\n/g, '\n')}</p>
             <div class="grid grid-cols-3 gap-2 pt-1">
               <button onclick="openExamViewer('${e.id}')" class="col-span-2 py-2.5 rounded-xl bg-[#F97316] text-white text-xs font-extrabold active:scale-[0.99]">
-                📄 មើលវិញ្ញាសា &amp; អត្រាកំណែពេញ
+                ${hasPages ? `🖼️ មើលវិញ្ញាសាពេញ (${pageCount} ទំព័រ)` : '📄 មើលវិញ្ញាសា & អត្រាកំណែពេញ'}
               </button>
               <button onclick="toggleReviewed('${e.id}')" class="py-2.5 rounded-xl text-xs font-bold transition ${done ? 'bg-[#E6F8F0] text-[#10B981]' : 'bg-zinc-100 text-zinc-500'}">
                 ${done ? '✓ ធីករួច' : '○ ធីករួច'}
@@ -2148,13 +1335,62 @@ Part 2: Grammar &amp; Writing (25 points)
       renderMath();
     }
 
+    function handleExamPageError(img, baseDir, num) {
+      if (!img.dataset.triedJpg) {
+        img.dataset.triedJpg = "1";
+        img.src = `${baseDir}${num}.jpg`;
+      } else if (!img.dataset.triedPng) {
+        img.dataset.triedPng = "1";
+        img.src = `${baseDir}${num}.png`;
+      } else {
+        if (img.parentElement) img.parentElement.style.display = "none";
+      }
+    }
+
     function openExamViewer(id) {
       const ex = EXAMS.find(x => x.id === id);
       if (!ex) return;
+
+      const hasPages = typeof ex.pageFrom === 'number' && typeof ex.pageTo === 'number';
       document.getElementById('exam-viewer-title').textContent = ex.title;
-      document.getElementById('exam-viewer-meta').textContent = `${ex.subj} • ${ex.tag} • ទំព័រ ${ex.pageFrom || 1}–${ex.pageTo || 1}`;
-      document.getElementById('exam-reader-question').textContent = ex.question.replace(/\\n/g, '\n');
-      document.getElementById('exam-reader-answer').textContent = ex.answer.replace(/\\n/g, '\n');
+      document.getElementById('exam-viewer-meta').textContent = hasPages
+        ? `${ex.subj} • ${ex.tag} • ទំព័រ ${ex.pageFrom}–${ex.pageTo}`
+        : `${ex.subj} • ${ex.tag}`;
+
+      const pagesWrap = document.getElementById('exam-reader-pages-wrap');
+      const pagesBox = document.getElementById('exam-reader-pages');
+      const textWrap = document.getElementById('exam-reader-text-wrap');
+
+      if (hasPages) {
+        pagesWrap.classList.remove('hidden');
+        textWrap.classList.add('hidden');
+        const totalP = ex.pageTo - ex.pageFrom + 1;
+        document.getElementById('exam-pages-badge').textContent = `${totalP} ទំព័រ`;
+
+        let html = '';
+        for (let p = ex.pageFrom; p <= ex.pageTo; p++) {
+          const num = String(p).padStart(3, '0');
+          html += `
+            <div class="rounded-2xl overflow-hidden border border-zinc-200/90 bg-zinc-50 shadow-sm">
+              <div class="px-3 py-1.5 bg-zinc-100/90 border-b border-zinc-200/70 flex justify-between items-center text-[11px] font-bold text-zinc-600">
+                <span>ទំព័រទី ${p - ex.pageFrom + 1} / ${totalP}</span>
+                <span class="text-zinc-400">File: ${num}</span>
+              </div>
+              <img src="${EXAM_PAGES_DIR}${num}.webp" alt="ទំព័រ ${p}" loading="lazy"
+                onerror="handleExamPageError(this, '${EXAM_PAGES_DIR}', '${num}')"
+                class="w-full h-auto block select-none">
+            </div>
+          `;
+        }
+        pagesBox.innerHTML = html;
+      } else {
+        pagesWrap.classList.add('hidden');
+        textWrap.classList.remove('hidden');
+        pagesBox.innerHTML = '';
+        document.getElementById('exam-reader-question').textContent = ex.question.replace(/\\n/g, '\n');
+        document.getElementById('exam-reader-answer').textContent = ex.answer.replace(/\\n/g, '\n');
+      }
+
       document.getElementById('exam-viewer').classList.remove('hidden');
       document.getElementById('exam-viewer-scroll').scrollTop = 0;
       renderMath();
@@ -2613,6 +1849,4 @@ Part 2: Grammar &amp; Writing (25 points)
     updatePomoUI();
     calculateGrade();
   </script>
-
-
 </body></html>
